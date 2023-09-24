@@ -1,0 +1,15 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+/venv
+
+#DS_stores
+.DS_Store
+
+# VS Code things
+.vscode/
+
+#Results folder 
+/results
