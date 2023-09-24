@@ -1,6 +1,4 @@
 version: 2.1
-orbs:
-  pytest: thekevjames/pytest@0.0.60
 jobs:
   build:
     docker:
