@@ -13,7 +13,7 @@ Official Python porting of AGATA (Automated Glucose dATa Analysis): a toolbox to
 If you are using AGATA in your research, please cite it:  
 ```
 Cappon G, Sparacino G, Facchinetti A. AGATA: A toolbox for automated glucose data analysis.  
-J Diabetes Sci Technol. 2023. DOI: 10.1177/19322968221147570.
+J Diabetes Sci Technol. 2023. DOI: 10.1177/19322968221147570
 ```
 
 Link to the paper --> [here](https://doi.org/10.1177/19322968221147570)
