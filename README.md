@@ -5,6 +5,7 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/gcappon/py_agata/COPYING)
 [![GitHub commit](https://img.shields.io/github/last-commit/gcappon/py_agata)](https://github.com/gcappon/py_agata/commits/master)
 [![CircleCI](https://circleci.com/gh/gcappon/py_agata.svg?style=svg)](https://circleci.com/gh/gcappon/py_agata)
+[![codecov](https://codecov.io/gh/gcappon/py_agata/graph/badge.svg?token=RR39WKLDIK)](https://codecov.io/gh/gcappon/py_agata)
 
 Official Python porting of AGATA (Automated Glucose dATa Analysis): a toolbox to analyse glucose data. 
 
