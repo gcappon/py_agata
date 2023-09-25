@@ -24,3 +24,6 @@ def test_time_in_target():
     #Tests
     assert np.isnan(time_in_target(data,'diabetes')) == False
     assert time_in_target(data, 'diabetes') == 30
+
+    assert np.isnan(time_in_target(data, 'pregnancy')) == False
+    assert time_in_target(data, 'pregnancy') == 30

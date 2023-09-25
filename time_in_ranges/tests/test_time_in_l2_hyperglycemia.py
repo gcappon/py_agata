@@ -24,3 +24,6 @@ def test_time_in_l2_hyperglycemia():
     #Tests
     assert np.isnan(time_in_l2_hyperglycemia(data,'diabetes')) == False
     assert time_in_l2_hyperglycemia(data, 'diabetes') == 20
+
+    assert np.isnan(time_in_l2_hyperglycemia(data, 'pregnancy')) == False
+    assert time_in_l2_hyperglycemia(data, 'pregnancy') == 20

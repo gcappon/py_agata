@@ -24,3 +24,6 @@ def test_time_in_l2_hypoglycemia():
     #Tests
     assert np.isnan(time_in_l2_hypoglycemia(data,'diabetes')) == False
     assert time_in_l2_hypoglycemia(data, 'diabetes') == 10
+
+    assert np.isnan(time_in_l2_hypoglycemia(data, 'pregnancy')) == False
+    assert time_in_l2_hypoglycemia(data, 'pregnancy') == 10

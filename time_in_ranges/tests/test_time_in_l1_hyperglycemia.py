@@ -14,7 +14,7 @@ def test_time_in_l1_hyperglycemia():
     glucose[0] = 40
     glucose[1:3] = [60, 60]
     glucose[3] = 80
-    glucose[4:6] = [120, 120]
+    glucose[4:6] = [120, 150]
     glucose[6:8] = [200, 200]
     glucose[8:10] = [260, 260]
     glucose[10] = np.nan
@@ -24,3 +24,6 @@ def test_time_in_l1_hyperglycemia():
     #Tests
     assert np.isnan(time_in_l1_hyperglycemia(data,'diabetes')) == False
     assert time_in_l1_hyperglycemia(data, 'diabetes') == 20
+
+    assert np.isnan(time_in_l1_hyperglycemia(data, 'pregnancy')) == False
+    assert time_in_l1_hyperglycemia(data, 'pregnancy') == 30
