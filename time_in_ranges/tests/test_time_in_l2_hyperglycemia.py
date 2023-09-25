@@ -27,3 +27,10 @@ def test_time_in_l2_hyperglycemia():
 
     assert np.isnan(time_in_l2_hyperglycemia(data, 'pregnancy')) == False
     assert time_in_l2_hyperglycemia(data, 'pregnancy') == 20
+
+    try:
+        time_in_l2_hyperglycemia(data,'other')
+    except RuntimeError:
+        assert True
+    else:
+        assert False

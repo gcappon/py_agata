@@ -27,3 +27,10 @@ def test_time_in_tight_target():
 
     assert np.isnan(time_in_tight_target(data, 'pregnancy')) == False
     assert time_in_tight_target(data, 'pregnancy') == 30
+
+    try:
+        time_in_tight_target(data,'other')
+    except RuntimeError:
+        assert True
+    else:
+        assert False

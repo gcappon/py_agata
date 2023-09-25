@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 from multiprocessing import freeze_support
 
 from agata import Agata
-
+from time_in_ranges.tests.test_time_in_hyperglycemia import test_time_in_hyperglycemia
 def load_test_data(real=True, single_meal=True):
     if real:
 
@@ -43,3 +43,5 @@ if __name__ == '__main__':
     #Analyze data
     res = agata.analyze_glucose_profile()
     print(res)
+
+    test_time_in_hyperglycemia()
