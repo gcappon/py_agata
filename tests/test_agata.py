@@ -3,10 +3,10 @@ import numpy as np
 import datetime
 from datetime import datetime, timedelta
 
-from time_in_ranges import time_in_l1_hypoglycemia
+from agata import Agata
 
 
-def test_time_in_l1_hypoglycemia():
+def test_agata_init():
     # Set test data
     t = np.arange(datetime(2000, 1, 1, 0, 0, 0), datetime(2000, 1, 1, 0, 55, 0), timedelta(minutes=5)).astype(
         datetime)
@@ -14,7 +14,7 @@ def test_time_in_l1_hypoglycemia():
     glucose[0] = 40
     glucose[1:3] = [60, 60]
     glucose[3] = 80
-    glucose[4:6] = [120, 120]
+    glucose[4:6] = [120, 130]
     glucose[6:8] = [200, 200]
     glucose[8:10] = [260, 260]
     glucose[10] = np.nan
@@ -22,13 +22,7 @@ def test_time_in_l1_hypoglycemia():
     data = pd.DataFrame(data=d)
 
     #Tests
-    assert np.isnan(time_in_l1_hypoglycemia(data,'diabetes')) == False
-    assert time_in_l1_hypoglycemia(data, 'diabetes') == 20
+    agata = Agata(data=data, glycemic_target='diabetes')
 
-    assert np.isnan(time_in_l1_hypoglycemia(data, 'pregnancy')) == False
-    assert time_in_l1_hypoglycemia(data, 'pregnancy') == 20
-
-    try:
-        time_in_l1_hypoglycemia(data,'other')
-    except RuntimeError:
-        assert True
+    assert agata.glycemic_target == 'diabetes'
+    assert agata.data is data

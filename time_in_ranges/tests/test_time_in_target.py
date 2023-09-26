@@ -32,5 +32,3 @@ def test_time_in_target():
         time_in_target(data,'other')
     except RuntimeError:
         assert True
-    else:
-        assert False

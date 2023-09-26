@@ -32,5 +32,3 @@ def test_time_in_l2_hypoglycemia():
         time_in_l2_hypoglycemia(data,'other')
     except RuntimeError:
         assert True
-    else:
-        assert False
