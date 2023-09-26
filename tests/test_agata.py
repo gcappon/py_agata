@@ -7,6 +7,33 @@ from agata import Agata
 
 
 def test_agata_init():
+    """
+    Unit test of Agata constructor.
+
+    Parameters
+    ----------
+    None
+
+    Returns
+    -------
+    None
+
+    Raises
+    ------
+    None
+
+    See Also
+    --------
+    None
+
+    Examples
+    --------
+    None
+
+    References
+    ----------
+    None
+    """
     # Set test data
     t = np.arange(datetime(2000, 1, 1, 0, 0, 0), datetime(2000, 1, 1, 0, 55, 0), timedelta(minutes=5)).astype(
         datetime)

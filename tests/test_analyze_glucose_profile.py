@@ -6,7 +6,34 @@ from datetime import datetime, timedelta
 from agata import Agata
 
 
-def test_agata_init():
+def test_analyze_glucose_profile():
+    """
+    Unit test of Agata.analyze_glucose_profile function.
+
+    Parameters
+    ----------
+    None
+
+    Returns
+    -------
+    None
+
+    Raises
+    ------
+    None
+
+    See Also
+    --------
+    None
+
+    Examples
+    --------
+    None
+
+    References
+    ----------
+    None
+    """
     # Set test data
     t = np.arange(datetime(2000, 1, 1, 0, 0, 0), datetime(2000, 1, 1, 0, 55, 0), timedelta(minutes=5)).astype(
         datetime)
@@ -30,15 +57,15 @@ def test_agata_init():
 
     #Time fields
     assert type(results) is dict
-    assert type(results['time']) is dict
-    assert results['time']['time_in_target'] == 30
-    assert results['time']['time_in_tight_target'] == 20
-    assert results['time']['time_in_hypoglycemia'] == 30
-    assert results['time']['time_in_l1_hypoglycemia'] == 20
-    assert results['time']['time_in_l2_hypoglycemia'] == 10
-    assert results['time']['time_in_hyperglycemia'] == 40
-    assert results['time']['time_in_l1_hyperglycemia'] == 20
-    assert results['time']['time_in_l2_hyperglycemia'] == 20
+    assert type(results['time_in_ranges']) is dict
+    assert results['time_in_ranges']['time_in_target'] == 30
+    assert results['time_in_ranges']['time_in_tight_target'] == 20
+    assert results['time_in_ranges']['time_in_hypoglycemia'] == 30
+    assert results['time_in_ranges']['time_in_l1_hypoglycemia'] == 20
+    assert results['time_in_ranges']['time_in_l2_hypoglycemia'] == 10
+    assert results['time_in_ranges']['time_in_hyperglycemia'] == 40
+    assert results['time_in_ranges']['time_in_l1_hyperglycemia'] == 20
+    assert results['time_in_ranges']['time_in_l2_hyperglycemia'] == 20
 
     #Pregnancy
     agata = Agata(data=data, glycemic_target='pregnancy')
@@ -47,12 +74,12 @@ def test_agata_init():
 
     # Time fields
     assert type(results) is dict
-    assert type(results['time']) is dict
-    assert results['time']['time_in_target'] == 20
-    assert results['time']['time_in_tight_target'] == 20
-    assert results['time']['time_in_hypoglycemia'] == 30
-    assert results['time']['time_in_l1_hypoglycemia'] == 20
-    assert results['time']['time_in_l2_hypoglycemia'] == 10
-    assert results['time']['time_in_hyperglycemia'] == 50
-    assert results['time']['time_in_l1_hyperglycemia'] == 30
-    assert results['time']['time_in_l2_hyperglycemia'] == 20
+    assert type(results['time_in_ranges']) is dict
+    assert results['time_in_ranges']['time_in_target'] == 20
+    assert results['time_in_ranges']['time_in_tight_target'] == 20
+    assert results['time_in_ranges']['time_in_hypoglycemia'] == 30
+    assert results['time_in_ranges']['time_in_l1_hypoglycemia'] == 20
+    assert results['time_in_ranges']['time_in_l2_hypoglycemia'] == 10
+    assert results['time_in_ranges']['time_in_hyperglycemia'] == 50
+    assert results['time_in_ranges']['time_in_l1_hyperglycemia'] == 30
+    assert results['time_in_ranges']['time_in_l2_hyperglycemia'] == 20

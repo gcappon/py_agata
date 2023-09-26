@@ -7,6 +7,33 @@ from time_in_ranges import time_in_l2_hyperglycemia
 
 
 def test_time_in_l2_hyperglycemia():
+    """
+    Unit test of time_in_l2_hypoglycemia function.
+
+    Parameters
+    ----------
+    None
+
+    Returns
+    -------
+    None
+
+    Raises
+    ------
+    None
+
+    See Also
+    --------
+    None
+
+    Examples
+    --------
+    None
+
+    References
+    ----------
+    None
+    """
     # Set test data
     t = np.arange(datetime(2000, 1, 1, 0, 0, 0), datetime(2000, 1, 1, 0, 55, 0), timedelta(minutes=5)).astype(
         datetime)
