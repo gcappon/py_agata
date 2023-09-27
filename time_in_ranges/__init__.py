@@ -437,6 +437,10 @@ def time_in_given_range(data, th_l, th_h, include_th_l=False, include_th_h=False
     # Get non-nan values
     values = data.glucose.values[~np.isnan(data.glucose.values)]
 
+    # Return nan if all values are nan
+    if values.size == 0:
+        return np.nan
+
     # Get low/high flags
     flags_l = values >= th_l if include_th_l else values > th_l
     flags_h = values <= th_h if include_th_h else values < th_h
@@ -485,6 +489,10 @@ def time_in_given_above_range(data, th, include_th=False):
     # Get non-nan values
     values = data.glucose.values[~np.isnan(data.glucose.values)]
 
+    # Return nan if all values are nan
+    if values.size == 0:
+        return np.nan
+
     # Get flags
     flags = values >= th if include_th else values > th
 
@@ -531,6 +539,10 @@ def time_in_given_below_range(data, th, include_th=False):
     """
     # Get non-nan values
     values = data.glucose.values[~np.isnan(data.glucose.values)]
+
+    # Return nan if all values are nan
+    if values.size == 0:
+        return np.nan
 
     # Get flags
     flags = values <= th if include_th else values < th

@@ -63,7 +63,7 @@ def adrr(data):
         # Get rid of nans
         non_nan_glucose = day_data[~np.isnan(day_data)]
 
-        if ~(non_nan_glucose.size == 0):
+        if not non_nan_glucose.size == 0:
 
             # Symmetrization
             f = gamma*(np.log(non_nan_glucose)**alpha-beta)
