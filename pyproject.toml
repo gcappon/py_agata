@@ -9,7 +9,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "py_agata"
-version = "0.0.1"
+version = "0.0.2"
 authors = [
   { name="Giacomo Cappon", email="cappongiacomo@gmail.com" },
 ]
