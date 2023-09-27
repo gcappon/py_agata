@@ -83,3 +83,107 @@ def adrr(data):
 
     # Return adrr
     return np.nanmean(max_hbgi_day + max_lbgi_day)
+
+
+def lbgi(data):
+    """
+    Computes the low blood glucose index (LBGI) of the glucose concentration (ignoring nan values).
+
+    Parameters
+    ----------
+    data: pd.DataFrame
+        Pandas dataframe with a column `glucose` containing the glucose data
+        to analyze (in mg/dl).
+
+    Returns
+    -------
+    lbgi: float
+        the low blood glucose index of the glucose concentration.
+
+    Raises
+    ------
+    None
+
+    See Also
+    --------
+    None
+
+    Examples
+    --------
+    None
+
+    References
+    ----------
+    Kovatchev et al., "Evaluation of a new measure of blood glucose variability in
+    diabetes", Diabetes Care, 2006, vol. 29, pp. 2433-2438. DOI: 10.2337/dc06-1085.
+    """
+    # Setup the formula parameters
+    alpha = 1.084
+    beta = 5.381
+    gamma = 1.509
+    th = 112.5
+
+    # Get rid of nans
+    non_nan_glucose = data.glucose.values[~np.isnan(data.glucose.values)]
+
+    # Symmetrization
+    f = gamma*(np.log(non_nan_glucose)**alpha-beta)
+
+    # Risk computation
+    rl = 10*(f**2)
+    rl[non_nan_glucose > th] = 0
+
+    # Return lbgi
+    return np.mean(rl)
+
+
+def hbgi(data):
+    """
+    Computes the high blood glucose index (HBGI) of the glucose concentration (ignoring nan values).
+
+    Parameters
+    ----------
+    data: pd.DataFrame
+        Pandas dataframe with a column `glucose` containing the glucose data
+        to analyze (in mg/dl).
+
+    Returns
+    -------
+    hbgi: float
+        the high blood glucose index of the glucose concentration.
+
+    Raises
+    ------
+    None
+
+    See Also
+    --------
+    None
+
+    Examples
+    --------
+    None
+
+    References
+    ----------
+    Kovatchev et al., "Evaluation of a new measure of blood glucose variability in
+    diabetes", Diabetes Care, 2006, vol. 29, pp. 2433-2438. DOI: 10.2337/dc06-1085.
+    """
+    # Setup the formula parameters
+    alpha = 1.084
+    beta = 5.381
+    gamma = 1.509
+    th = 112.5
+
+    # Get rid of nans
+    non_nan_glucose = data.glucose.values[~np.isnan(data.glucose.values)]
+
+    # Symmetrization
+    f = gamma*(np.log(non_nan_glucose)**alpha-beta)
+
+    # Risk computation
+    rh = 10*(f**2)
+    rh[non_nan_glucose < th] = 0
+
+    # Return hbgi
+    return np.mean(rh)
