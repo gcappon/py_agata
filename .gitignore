@@ -1,5 +1,6 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
+
 *.py[cod]
 
 # Virtual environment
@@ -11,5 +12,6 @@ __pycache__/
 # VS Code things
 .vscode/
 
-#Results folder 
-/results
+#Build and dists
+dist/
+py_agata.egg-info/

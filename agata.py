@@ -1,4 +1,7 @@
 from time_in_ranges import *
+from risk import *
+
+
 class Agata:
     """
     Core class of AGATA.
@@ -36,7 +39,9 @@ class Agata:
         results: dict
             A dictionary containing the results of the analysis i.e.:
             - time_in_ranges: dict
-                A dictionary containing the results of the time in range related metrics.
+                A dictionary containing the values of the time in range related metrics.
+            - risk: dict
+                A dictionary containing the values of the risk related metrics.
 
         Raises
         ------
@@ -66,6 +71,14 @@ class Agata:
         results['time_in_ranges']['time_in_hyperglycemia'] = time_in_hyperglycemia(self.data, self.glycemic_target)
         results['time_in_ranges']['time_in_l1_hyperglycemia'] = time_in_l1_hyperglycemia(self.data, self.glycemic_target)
         results['time_in_ranges']['time_in_l2_hyperglycemia'] = time_in_l2_hyperglycemia(self.data, self.glycemic_target)
+
+        # Get risk metrics
+        results['risk'] = dict()
+        results['risk']['adrr'] = adrr(self.data)
+        results['risk']['lbgi'] = lbgi(self.data)
+        results['risk']['hbgi'] = hbgi(self.data)
+        results['risk']['bgri'] = bgri(self.data)
+        results['risk']['gri'] = gri(self.data)
 
         # Return results
         return results

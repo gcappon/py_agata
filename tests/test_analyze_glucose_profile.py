@@ -48,15 +48,15 @@ def test_analyze_glucose_profile():
     d = {'t': t, 'glucose': glucose}
     data = pd.DataFrame(data=d)
 
-    #Tests
+    # Tests
 
-    #Diabetes
+    # Diabetes
     agata = Agata(data=data, glycemic_target='diabetes')
 
     results = agata.analyze_glucose_profile()
-
-    #Time fields
     assert type(results) is dict
+
+    # Time fields
     assert type(results['time_in_ranges']) is dict
     assert results['time_in_ranges']['time_in_target'] == 30
     assert results['time_in_ranges']['time_in_tight_target'] == 20
@@ -67,7 +67,15 @@ def test_analyze_glucose_profile():
     assert results['time_in_ranges']['time_in_l1_hyperglycemia'] == 20
     assert results['time_in_ranges']['time_in_l2_hyperglycemia'] == 20
 
-    #Pregnancy
+    # Risk fields
+    assert type(results['risk']) is dict
+    assert np.round(results['risk']['adrr']*100)/100 == 61.13
+    assert np.round(results['risk']['lbgi']*100)/100 == 6.76
+    assert np.round(results['risk']['hbgi']*100)/100 == 7.57
+    assert np.round(results['risk']['bgri']*100)/100 == 14.32
+    assert np.round(results['risk']['gri']*100)/100 == 100.00
+
+    # Pregnancy
     agata = Agata(data=data, glycemic_target='pregnancy')
 
     results = agata.analyze_glucose_profile()
@@ -83,3 +91,11 @@ def test_analyze_glucose_profile():
     assert results['time_in_ranges']['time_in_hyperglycemia'] == 50
     assert results['time_in_ranges']['time_in_l1_hyperglycemia'] == 30
     assert results['time_in_ranges']['time_in_l2_hyperglycemia'] == 20
+
+    # Risk fields
+    assert type(results['risk']) is dict
+    assert np.round(results['risk']['adrr'] * 100) / 100 == 61.13
+    assert np.round(results['risk']['lbgi'] * 100) / 100 == 6.76
+    assert np.round(results['risk']['hbgi'] * 100) / 100 == 7.57
+    assert np.round(results['risk']['bgri'] * 100) / 100 == 14.32
+    assert np.round(results['risk']['gri'] * 100) / 100 == 100.00
