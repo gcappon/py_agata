@@ -62,3 +62,14 @@ def test_conga():
 
     # Tests
     assert np.isnan(conga(data))
+
+    # Set shorter empty data
+    t = np.arange(datetime(2000, 1, 1, 1, 0, 0), datetime(2000, 1, 1, 0, 15, 0), timedelta(minutes=5)).astype(
+        datetime)
+    glucose = np.zeros(shape=(t.shape[0],))
+    glucose.fill(np.nan)
+    d = {'t': t, 'glucose': glucose}
+    data = pd.DataFrame(data=d)
+
+    # Tests
+    assert np.isnan(conga(data))
