@@ -208,8 +208,6 @@ def read_dexcom_data(file, extension='xlsx'):
                 d = 39
             elif g_raw[e] == 'High':
                 d = 401
-            else:
-                d = float(g_raw[e])
         else:
             d = g_raw[e]
         glucose[count] = d
