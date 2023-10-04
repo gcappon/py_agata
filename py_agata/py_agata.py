@@ -1,3 +1,4 @@
+from py_agata.variability import *
 from py_agata.time_in_ranges import *
 from py_agata.risk import *
 
@@ -60,6 +61,29 @@ class Agata:
         None
         """
         results = dict()
+
+        # Get variability metrics
+        results['variability'] = dict()
+        results['variability']['mean_glucose'] = mean_glucose(self.data)
+        results['variability']['median_glucose'] = median_glucose(self.data)
+        results['variability']['std_glucose'] = std_glucose(self.data)
+        results['variability']['cv_glucose'] = cv_glucose(self.data)
+        results['variability']['range_glucose'] = range_glucose(self.data)
+        results['variability']['iqr_glucose'] = iqr_glucose(self.data)
+        results['variability']['auc_glucose'] = auc_glucose(self.data)
+        results['variability']['gmi'] = gmi(self.data)
+        results['variability']['cogi'] = cogi(self.data)
+        results['variability']['conga'] = conga(self.data)
+        results['variability']['j_index'] = j_index(self.data)
+        results['variability']['mage_plus_index'] = mage_plus_index(self.data)
+        results['variability']['mage_minus_index'] = mage_minus_index(self.data)
+        results['variability']['mage_index'] = mage_index(self.data)
+        results['variability']['ef_index'] = ef_index(self.data)
+        results['variability']['modd'] = modd(self.data)
+        results['variability']['sddm_index'] = sddm_index(self.data)
+        results['variability']['sdw_index'] = sdw_index(self.data)
+        results['variability']['std_glucose_roc'] = std_glucose_roc(self.data)
+        results['variability']['cvga'] = cvga(self.data)
 
         # Get time metrics
         results['time_in_ranges'] = dict()

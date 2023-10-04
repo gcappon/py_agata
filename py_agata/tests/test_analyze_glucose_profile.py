@@ -56,6 +56,30 @@ def test_analyze_glucose_profile():
     results = agata.analyze_glucose_profile()
     assert type(results) is dict
 
+    # Variability metrics
+    assert type(results) is dict
+    assert type(results['variability']) is dict
+    assert np.round(results['variability']['mean_glucose'] * 1000) / 1000 == 143.000
+    assert np.round(results['variability']['median_glucose'] * 1000) / 1000 == 135.000
+    assert np.round(results['variability']['std_glucose'] * 1000) / 1000 == 83.540
+    assert np.round(results['variability']['cv_glucose'] * 1000) / 1000 == 58.419
+    assert np.round(results['variability']['range_glucose'] * 1000) / 1000 == 220.000
+    assert np.round(results['variability']['iqr_glucose'] * 1000) / 1000 == 135.000
+    assert np.round(results['variability']['auc_glucose'] * 1000) / 1000 == 7150.000
+    assert np.round(results['variability']['gmi'] * 1000) / 1000 == 6.731
+    assert np.round(results['variability']['cogi'] * 1000) / 1000 == 19.091
+    assert np.isnan(np.round(results['variability']['conga'] * 1000) / 1000)
+    assert np.round(results['variability']['j_index'] * 1000) / 1000 == 51.320
+    assert np.round(results['variability']['mage_plus_index'] * 1000) / 1000 == 0.0
+    assert np.round(results['variability']['mage_minus_index'] * 1000) / 1000 == 0.0
+    assert np.round(results['variability']['mage_index'] * 1000) / 1000 == 0.0
+    assert np.round(results['variability']['ef_index'] * 1000) / 1000 == 0.0
+    assert np.isnan(np.round(results['variability']['modd'] * 1000) / 1000)
+    assert np.isnan(np.round(results['variability']['sddm_index'] * 1000) / 1000)
+    assert np.round(results['variability']['sdw_index'] * 1000) / 1000 == 83.540
+    assert np.round(results['variability']['std_glucose_roc'] * 1000) / 1000 == 1.925
+    assert np.round(results['variability']['cvga'] * 1000) / 1000 == 4759.436
+
     # Time fields
     assert type(results['time_in_ranges']) is dict
     assert results['time_in_ranges']['time_in_target'] == 30
@@ -79,9 +103,32 @@ def test_analyze_glucose_profile():
     agata = Agata(data=data, glycemic_target='pregnancy')
 
     results = agata.analyze_glucose_profile()
+    assert type(results) is dict
+
+    # Variability metrics
+    assert type(results['variability']) is dict
+    assert np.round(results['variability']['mean_glucose']*1000)/1000 == 143.000
+    assert np.round(results['variability']['median_glucose']*1000)/1000 == 135.000
+    assert np.round(results['variability']['std_glucose']*1000)/1000 == 83.540
+    assert np.round(results['variability']['cv_glucose']*1000)/1000 == 58.419
+    assert np.round(results['variability']['range_glucose']*1000)/1000 == 220.000
+    assert np.round(results['variability']['iqr_glucose']*1000)/1000 == 135.000
+    assert np.round(results['variability']['auc_glucose']*1000)/1000 == 7150.000
+    assert np.round(results['variability']['gmi']*1000)/1000 == 6.731
+    assert np.round(results['variability']['cogi']*1000)/1000 == 19.091
+    assert np.isnan(np.round(results['variability']['conga']*1000)/1000)
+    assert np.round(results['variability']['j_index']*1000)/1000 == 51.320
+    assert np.round(results['variability']['mage_plus_index']*1000)/1000 == 0.0
+    assert np.round(results['variability']['mage_minus_index']*1000)/1000 == 0.0
+    assert np.round(results['variability']['mage_index']*1000)/1000 == 0.0
+    assert np.round(results['variability']['ef_index']*1000)/1000 == 0.0
+    assert np.isnan(np.round(results['variability']['modd']*1000)/1000)
+    assert np.isnan(np.round(results['variability']['sddm_index']*1000)/1000)
+    assert np.round(results['variability']['sdw_index']*1000)/1000 == 83.540
+    assert np.round(results['variability']['std_glucose_roc']*1000)/1000 == 1.925
+    assert np.round(results['variability']['cvga']*1000)/1000 == 4759.436
 
     # Time fields
-    assert type(results) is dict
     assert type(results['time_in_ranges']) is dict
     assert results['time_in_ranges']['time_in_target'] == 20
     assert results['time_in_ranges']['time_in_tight_target'] == 20
