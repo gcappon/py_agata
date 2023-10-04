@@ -74,3 +74,15 @@ def test_mage_index():
 
     # Tests
     assert np.isnan(mage_index(data))
+
+    # Set shorter empty data
+    t = np.arange(datetime(2000, 1, 1, 1, 0, 0), datetime(2000, 1, 1, 1, 15, 0), timedelta(minutes=5)).astype(
+        datetime)
+    glucose = np.zeros(shape=(t.shape[0],))
+    glucose[0] = np.nan
+    glucose[1:3] = [np.nan, np.nan]
+    d = {'t': t, 'glucose': glucose}
+    data = pd.DataFrame(data=d)
+
+    # Tests
+    assert np.isnan(mage_index(data))
