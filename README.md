@@ -9,6 +9,13 @@
 
 Official Python porting of AGATA (Automated Glucose dATa Analysis): a toolbox to analyse glucose data. 
 
+## Installation
+
+To install it, just run `pip` in your terminal:  
+```
+pip install py_agata
+```
+
 ## Citing
 
 If you are using AGATA in your research, please cite it:  
