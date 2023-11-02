@@ -40,7 +40,7 @@ def detrend_glucose(data):
     """
     t0 = pd.to_datetime(data.t.values[0]).to_pydatetime()
     t1 = pd.to_datetime(data.t.values[1]).to_pydatetime()
-    sample_time = (t1-t0).seconds/60
+    sample_time = (t1-t0).total_seconds()/60
 
     # Compute the slope
     first_point = np.where(~np.isnan(data.glucose.values))[0]
@@ -93,7 +93,7 @@ def impute_glucose(data, max_gap):
     # Get the sample time
     t0 = pd.to_datetime(data.t.values[0]).to_pydatetime()
     t1 = pd.to_datetime(data.t.values[1]).to_pydatetime()
-    sample_time = (t1 - t0).seconds / 60
+    sample_time = (t1 - t0).total_seconds() / 60
 
     # Find the interpolable gaps
     short_nan, long_nan, nan_start, nan_end = find_nan_islands(data, np.round(max_gap / sample_time))
@@ -160,7 +160,7 @@ def retime_glucose(data, timestep):
 
         # Find the nearest timestamp
         t_temp = pd.to_datetime(data_temp.t.values[t]).to_pydatetime()
-        distances = [abs(x - t_temp).seconds for x in t_list]
+        distances = [abs(x - t_temp).total_seconds() for x in t_list]
         idx_near = np.where(min(distances) == np.array(distances))[0][0]
 
         # Manage conflicts computing their average

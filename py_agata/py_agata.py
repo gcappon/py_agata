@@ -2,6 +2,7 @@ from py_agata.variability import *
 from py_agata.time_in_ranges import *
 from py_agata.risk import *
 from py_agata.glycemic_transformation import *
+from py_agata.inspection import *
 
 class Agata:
     """
@@ -43,6 +44,13 @@ class Agata:
                 A dictionary containing the values of the time in range related metrics.
             - risk: dict
                 A dictionary containing the values of the risk related metrics.
+            - glycemic_transformation: dict
+                A dictionary containing the values of the glycemic_transformation related metrics.
+            - data_quality: dict
+                A dictionary containing the values of the data quality related metrics.
+            - events: dict
+                A dictionary containing the values of the events related metrics.
+
 
         Raises
         ------
@@ -114,6 +122,17 @@ class Agata:
         results['glycemic_transformation']['hypo_index'] = hypo_index(self.data)
         results['glycemic_transformation']['hyper_index'] = hyper_index(self.data)
         results['glycemic_transformation']['mr_index'] = mr_index(self.data)
+
+        # Event metrics
+        results['events'] = dict()
+        results['events']['hypoglycemic_events'] = find_hypoglycemic_events_by_level(self.data, glycemic_target=self.glycemic_target)
+        results['events']['hyperglycemic_events'] = find_hyperglycemic_events_by_level(self.data, glycemic_target=self.glycemic_target)
+        results['events']['extended_hypoglycemic_events'] = find_extended_hypoglycemic_events(self.data)
+
+        # Data quality metrics
+        results['data_quality'] = dict()
+        results['data_quality']['number_days_of_observation'] = number_days_of_observation(self.data)
+        results['data_quality']['missing_glucose_percentage'] = missing_glucose_percentage(self.data)
 
         # Return results
         return results

@@ -99,7 +99,7 @@ def test_analyze_glucose_profile():
     assert np.round(results['risk']['bgri']*100)/100 == 14.32
     assert np.round(results['risk']['gri']*100)/100 == 100.00
 
-    # Glycemic transformation fileds
+    # Glycemic transformation fields
     assert type(results['glycemic_transformation']) is dict
     assert np.round(results['glycemic_transformation']['grade_score'] * 100) / 100 == 13.03
     assert np.round(results['glycemic_transformation']['grade_hypo_score'] * 100) / 100 == 38.99
@@ -158,7 +158,7 @@ def test_analyze_glucose_profile():
     assert np.round(results['risk']['bgri'] * 100) / 100 == 14.32
     assert np.round(results['risk']['gri'] * 100) / 100 == 100.00
 
-    # Glycemic transformation fileds
+    # Glycemic transformation fields
     assert type(results['glycemic_transformation']) is dict
     assert np.round(results['glycemic_transformation']['grade_score'] * 100) / 100 == 13.03
     assert np.round(results['glycemic_transformation']['grade_hypo_score'] * 100) / 100 == 38.99
@@ -168,3 +168,14 @@ def test_analyze_glucose_profile():
     assert np.round(results['glycemic_transformation']['hypo_index'] * 100) / 100 == 3.67
     assert np.round(results['glycemic_transformation']['hyper_index'] * 100) / 100 == 1.01
     assert np.round(results['glycemic_transformation']['mr_index'] * 100) / 100 == 28.92
+
+    # Data quality fields
+    assert type(results['data_quality']) is dict
+    assert np.round(results['data_quality']['number_days_of_observation'] * 100) / 100 == 0.03
+    assert np.round(results['data_quality']['missing_glucose_percentage'] * 100) / 100 == 9.09
+
+    # Events fields
+    # assert type(results['events']) is dict
+    assert type(results['events']['hypoglycemic_events']) is dict
+    assert type(results['events']['hyperglycemic_events']) is dict
+    assert type(results['events']['extended_hypoglycemic_events']) is dict
