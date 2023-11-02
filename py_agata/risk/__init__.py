@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 from datetime import datetime,timedelta
 from py_agata.time_in_ranges import time_in_l1_hypoglycemia, time_in_l2_hypoglycemia, time_in_l1_hyperglycemia, time_in_l2_hyperglycemia
 
@@ -42,9 +43,9 @@ def adrr(data):
     th = 112.5
 
     # Get the first and last day limits
-    first_day = data.t.to_dict()[0].to_pydatetime()
+    first_day = pd.to_datetime(data.t.values[0]).to_pydatetime()
     first_day = first_day.replace(hour=0, minute=0, second=0)
-    last_day = data.t.to_dict()[data.shape[0]-1].to_pydatetime()
+    last_day = pd.to_datetime(data.t.values[-1]).to_pydatetime()
     last_day = first_day.replace(day=last_day.day+1,hour=0, minute=0, second=0)
 
     # Calculate the number of days and preallocate the daily max lbgi and hbgi
@@ -333,7 +334,7 @@ def dynamic_risk(data, amplification_function='tanh', maximum_amplification=2.5,
 
 
     # Compute rate-of-change
-    ts = (data.t.to_dict()[1].to_pydatetime() - data.t.to_dict()[0].to_pydatetime()).total_seconds()/60
+    ts = (pd.to_datetime(data.t.values[1]).to_pydatetime() - pd.to_datetime(data.t.values[0]).to_pydatetime()).total_seconds()/60
     roc = np.diff(data.glucose.values)/ts
     roc = np.append(0,roc)
 

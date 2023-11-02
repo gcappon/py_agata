@@ -52,9 +52,9 @@ def test_glucose_vector_to_dataframe():
     assert np.isnan(results.glucose.values[0])
     assert results.glucose.values[1] == 100
     assert results.glucose.values[2] == 200
-    assert results.t.to_dict()[0].to_pydatetime() == t1[0]
-    assert results.t.to_dict()[1].to_pydatetime() == t1[1]
-    assert results.t.to_dict()[2].to_pydatetime() == t1[2]
+    assert pd.to_datetime(results.t.values[0]).to_pydatetime() == t1[0]
+    assert pd.to_datetime(results.t.values[1]).to_pydatetime() == t1[1]
+    assert pd.to_datetime(results.t.values[2]).to_pydatetime() == t1[2]
 
     results = glucose_vector_to_dataframe(glucose=glucose, sample_time=5, start_time=t2[0])
     assert type(results) is pd.DataFrame
@@ -64,7 +64,7 @@ def test_glucose_vector_to_dataframe():
     assert np.isnan(results.glucose.values[0])
     assert results.glucose.values[1] == 100
     assert results.glucose.values[2] == 200
-    assert results.t.to_dict()[0].to_pydatetime() == t2[0]
-    assert results.t.to_dict()[1].to_pydatetime() == t2[1]
-    assert results.t.to_dict()[2].to_pydatetime() == t2[2]
+    assert pd.to_datetime(results.t.values[0]).to_pydatetime() == t2[0]
+    assert pd.to_datetime(results.t.values[1]).to_pydatetime() == t2[1]
+    assert pd.to_datetime(results.t.values[2]).to_pydatetime() == t2[2]
 

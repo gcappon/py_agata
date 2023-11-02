@@ -284,7 +284,9 @@ def auc_glucose_over_basal(data, basal):
     values = values - basal
 
     # Get ts
-    ts = (data.t.to_dict()[1].to_pydatetime() - data.t.to_dict()[0].to_pydatetime()).total_seconds() / 60
+    t0 = pd.to_datetime(data.t.values[0]).to_pydatetime()
+    t1 = pd.to_datetime(data.t.values[1]).to_pydatetime()
+    ts = (t1 - t0).total_seconds() / 60
 
     # Return the result
     return np.sum(values*ts)
@@ -455,7 +457,7 @@ def conga(data):
     for i in range(1,n):
 
         # Find the index referring to conga_ord hours ago
-        j = np.where(data.t <= (data.t.to_dict()[i].to_pydatetime() - timedelta(hours=conga_ord)))[0]
+        j = np.where(data.t <= (pd.to_datetime(data.t.values[i]).to_pydatetime() - timedelta(hours=conga_ord)))[0]
 
         if not j.size == 0:
             j = j[-1]
@@ -539,9 +541,9 @@ def mage_plus_index(data):
     """
 
     # Get the first and last day limits
-    first_day = data.t.to_dict()[0].to_pydatetime()
+    first_day = pd.to_datetime(data.t.values[0]).to_pydatetime()
     first_day = first_day.replace(hour=0, minute=0, second=0)
-    last_day = data.t.to_dict()[data.shape[0] - 1].to_pydatetime()
+    last_day = pd.to_datetime(data.t.values[-1]).to_pydatetime()
     last_day = first_day.replace(day=last_day.day + 1, hour=0, minute=0, second=0)
 
     # Calculate the number of days and preallocate
@@ -704,9 +706,9 @@ def mage_minus_index(data):
     """
 
     # Get the first and last day limits
-    first_day = data.t.to_dict()[0].to_pydatetime()
+    first_day = pd.to_datetime(data.t.values[0]).to_pydatetime()
     first_day = first_day.replace(hour=0, minute=0, second=0)
-    last_day = data.t.to_dict()[data.shape[0] - 1].to_pydatetime()
+    last_day = pd.to_datetime(data.t.values[-1]).to_pydatetime()
     last_day = first_day.replace(day=last_day.day + 1, hour=0, minute=0, second=0)
 
     # Calculate the number of days and preallocate
@@ -907,9 +909,9 @@ def ef_index(data):
     ef_th = 75
 
     # Get the first and last day limits
-    first_day = data.t.to_dict()[0].to_pydatetime()
+    first_day = pd.to_datetime(data.t.values[0]).to_pydatetime()
     first_day = first_day.replace(hour=0, minute=0, second=0)
-    last_day = data.t.to_dict()[data.shape[0] - 1].to_pydatetime()
+    last_day = pd.to_datetime(data.t.values[-1]).to_pydatetime()
     last_day = first_day.replace(day=last_day.day + 1, hour=0, minute=0, second=0)
 
     # Calculate the number of days and preallocate
@@ -1080,8 +1082,7 @@ def modd(data):
     for i in range(1, n):
 
         # Find the index referring to the same time yesterday
-        data.t.to_dict()[0].to_pydatetime()
-        j = np.where(data.t <= (data.t.to_dict()[i].to_pydatetime() - yesterday))[0]
+        j = np.where(data.t <= (pd.to_datetime(data.t.values[i]).to_pydatetime() - yesterday))[0]
 
         if j.size > 0:  # if there is a meaningful sample in data[j]
             j = j[-1]
@@ -1128,9 +1129,9 @@ def sddm_index(data):
     Therapeutics, 2009, vol. 11, pp. 551-565. DOI: 10.1089/dia.2009.0015.
     """
     # Get the first and last day limits
-    first_day = data.t.to_dict()[0].to_pydatetime()
+    first_day = pd.to_datetime(data.t.values[0]).to_pydatetime()
     first_day = first_day.replace(hour=0, minute=0, second=0)
-    last_day = data.t.to_dict()[data.shape[0] - 1].to_pydatetime()
+    last_day = pd.to_datetime(data.t.values[-1]).to_pydatetime()
     last_day = first_day.replace(day=last_day.day + 1, hour=0, minute=0, second=0)
 
     # Calculate the number of days and preallocate
@@ -1186,9 +1187,9 @@ def sdw_index(data):
     Therapeutics, 2009, vol. 11, pp. 551-565. DOI: 10.1089/dia.2009.0015.
     """
     # Get the first and last day limits
-    first_day = data.t.to_dict()[0].to_pydatetime()
+    first_day = pd.to_datetime(data.t.values[0]).to_pydatetime()
     first_day = first_day.replace(hour=0, minute=0, second=0)
-    last_day = data.t.to_dict()[data.shape[0] - 1].to_pydatetime()
+    last_day = pd.to_datetime(data.t.values[-1]).to_pydatetime()
     last_day = first_day.replace(day=last_day.day + 1, hour=0, minute=0, second=0)
 
     # Calculate the number of days and preallocate

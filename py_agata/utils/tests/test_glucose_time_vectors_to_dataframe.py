@@ -50,7 +50,7 @@ def test_glucose_time_vectors_to_dataframe():
     assert np.isnan(results.glucose.values[0])
     assert results.glucose.values[1] == 100
     assert results.glucose.values[2] == 200
-    assert results.t.to_dict()[0].to_pydatetime() == t[0]
-    assert results.t.to_dict()[1].to_pydatetime() == t[1]
-    assert results.t.to_dict()[2].to_pydatetime() == t[2]
+    assert pd.to_datetime(results.t.values[0]).to_pydatetime() == t[0]
+    assert pd.to_datetime(results.t.values[1]).to_pydatetime() == t[1]
+    assert pd.to_datetime(results.t.values[2]).to_pydatetime() == t[2]
 
