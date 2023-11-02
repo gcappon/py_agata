@@ -99,6 +99,17 @@ def test_analyze_glucose_profile():
     assert np.round(results['risk']['bgri']*100)/100 == 14.32
     assert np.round(results['risk']['gri']*100)/100 == 100.00
 
+    # Glycemic transformation fileds
+    assert type(results['glycemic_transformation']) is dict
+    assert np.round(results['glycemic_transformation']['grade_score'] * 100) / 100 == 13.03
+    assert np.round(results['glycemic_transformation']['grade_hypo_score'] * 100) / 100 == 38.99
+    assert np.round(results['glycemic_transformation']['grade_hyper_score'] * 100) / 100 == 53.84
+    assert np.round(results['glycemic_transformation']['grade_eu_score'] * 100) / 100 == 7.17
+    assert np.round(results['glycemic_transformation']['igc'] * 100) / 100 == 4.67
+    assert np.round(results['glycemic_transformation']['hypo_index'] * 100) / 100 == 3.67
+    assert np.round(results['glycemic_transformation']['hyper_index'] * 100) / 100 == 1.01
+    assert np.round(results['glycemic_transformation']['mr_index'] * 100) / 100 == 28.92
+
     # Pregnancy
     agata = Agata(data=data, glycemic_target='pregnancy')
 
@@ -146,3 +157,14 @@ def test_analyze_glucose_profile():
     assert np.round(results['risk']['hbgi'] * 100) / 100 == 7.57
     assert np.round(results['risk']['bgri'] * 100) / 100 == 14.32
     assert np.round(results['risk']['gri'] * 100) / 100 == 100.00
+
+    # Glycemic transformation fileds
+    assert type(results['glycemic_transformation']) is dict
+    assert np.round(results['glycemic_transformation']['grade_score'] * 100) / 100 == 13.03
+    assert np.round(results['glycemic_transformation']['grade_hypo_score'] * 100) / 100 == 38.99
+    assert np.round(results['glycemic_transformation']['grade_hyper_score'] * 100) / 100 == 53.84
+    assert np.round(results['glycemic_transformation']['grade_eu_score'] * 100) / 100 == 7.17
+    assert np.round(results['glycemic_transformation']['igc'] * 100) / 100 == 4.67
+    assert np.round(results['glycemic_transformation']['hypo_index'] * 100) / 100 == 3.67
+    assert np.round(results['glycemic_transformation']['hyper_index'] * 100) / 100 == 1.01
+    assert np.round(results['glycemic_transformation']['mr_index'] * 100) / 100 == 28.92

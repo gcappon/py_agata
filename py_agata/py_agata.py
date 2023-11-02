@@ -1,7 +1,7 @@
 from py_agata.variability import *
 from py_agata.time_in_ranges import *
 from py_agata.risk import *
-
+from py_agata.glycemic_transformation import *
 
 class Agata:
     """
@@ -103,6 +103,17 @@ class Agata:
         results['risk']['hbgi'] = hbgi(self.data)
         results['risk']['bgri'] = bgri(self.data)
         results['risk']['gri'] = gri(self.data)
+
+        # Get glycemic transformation metrics
+        results['glycemic_transformation'] = dict()
+        results['glycemic_transformation']['grade_score'] = grade_score(self.data)
+        results['glycemic_transformation']['grade_hypo_score'] = grade_hypo_score(self.data)
+        results['glycemic_transformation']['grade_hyper_score'] = grade_hyper_score(self.data)
+        results['glycemic_transformation']['grade_eu_score'] = grade_eu_score(self.data)
+        results['glycemic_transformation']['igc'] = igc(self.data)
+        results['glycemic_transformation']['hypo_index'] = hypo_index(self.data)
+        results['glycemic_transformation']['hyper_index'] = hyper_index(self.data)
+        results['glycemic_transformation']['mr_index'] = mr_index(self.data)
 
         # Return results
         return results
