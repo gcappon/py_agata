@@ -292,3 +292,6 @@ def test_compare_two_arms():
 
     results, stats = agata.compare_two_arms(arm_1=[data_5, data_5, data_5, data_5], arm_2=[data_5, data_5, data_5, data_5], is_paired=True, alpha=0.05)
     results, stats = agata.compare_two_arms(arm_1=[data_5, data_5, data_5, data_5], arm_2=[data_5, data_5, data_5], is_paired=False, alpha=0.05)
+
+    results, stats = agata.compare_two_arms(arm_1=[data_1, data_1, data_1, data_1], arm_2=[data_1, data_1, data_1, data_1], is_paired=True, alpha=0.05)
+    

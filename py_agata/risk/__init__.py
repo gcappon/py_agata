@@ -38,7 +38,7 @@ def adrr(data):
     """
     if data.t.values.size == 0:
         return np.nan
-    
+
     # Setup the formula parameters
     alpha = 1.084
     beta = 5.381
