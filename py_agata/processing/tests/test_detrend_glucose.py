@@ -55,3 +55,11 @@ def test_detrend_glucose():
 
     assert np.all(np.isnan(data.glucose.values[0:3]))
     assert np.all(np.isnan(data.glucose.values[9:20]))
+
+    # Set test data
+    d = {'t': t[0], 'glucose': [100]}
+    data = pd.DataFrame(data=d)
+
+    # Tests
+    results = detrend_glucose(data)
+    assert (results.glucose[0] == 100)

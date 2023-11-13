@@ -38,13 +38,13 @@ def detrend_glucose(data):
     ----------
     None
     """
-    t0 = pd.to_datetime(data.t.values[0]).to_pydatetime()
-    t1 = pd.to_datetime(data.t.values[1]).to_pydatetime()
-    sample_time = (t1-t0).total_seconds()/60
-
     # Compute the slope
     first_point = np.where(~np.isnan(data.glucose.values))[0]
     if first_point.size > 1:
+        t0 = pd.to_datetime(data.t.values[0]).to_pydatetime()
+        t1 = pd.to_datetime(data.t.values[1]).to_pydatetime()
+        sample_time = (t1 - t0).total_seconds() / 60
+
         last_point = first_point[-1]
         first_point = first_point[0]
         m = (data.glucose.values[last_point] - data.glucose.values[first_point]) / ((last_point - first_point) * sample_time)

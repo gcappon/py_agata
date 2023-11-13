@@ -53,7 +53,7 @@ def test_g_rmse():
     glucose = np.zeros(shape=(t.shape[0],))
     glucose[0] = 30
     glucose[1:3] = [70, 70]
-    glucose[3] = 70
+    glucose[3] = 65
     glucose[4:6] = [130, 130]
     glucose[6:8] = [np.nan, np.nan]
     glucose[8:10] = [260, 260]
@@ -63,7 +63,7 @@ def test_g_rmse():
 
     #Tests
     assert np.isnan(g_rmse(data,data_hat)) == False
-    assert np.round(g_rmse(data,data_hat)*1000)/1000 == 12.990
+    assert np.round(g_rmse(data,data_hat)*1000)/1000 == 14.416
 
     d = {'t': [], 'glucose': []}
     data_hat = pd.DataFrame(data=d)

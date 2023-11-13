@@ -43,7 +43,7 @@ def test_clarke():
     glucose[3] = 80
     glucose[4:6] = [180, 180]
     glucose[6:8] = [170, 170]
-    glucose[8:10] = [260, 260]
+    glucose[8:10] = [260, 100]
     glucose[10] = np.nan
     d = {'t': t, 'glucose': glucose}
     data = pd.DataFrame(data=d)
@@ -56,7 +56,7 @@ def test_clarke():
     glucose[3] = 70
     glucose[4:6] = [130, 130]
     glucose[6:8] = [np.nan, np.nan]
-    glucose[8:10] = [60, 60]
+    glucose[8:10] = [60, 220]
     glucose[10] = 60
     d = {'t': t, 'glucose': glucose}
     data_hat = pd.DataFrame(data=d)
@@ -66,9 +66,9 @@ def test_clarke():
     assert type(results) is dict
     assert results["a"] == 12.5
     assert results["b"] == 25
-    assert results["c"] == 0
+    assert results["c"] == 12.5
     assert results["d"] == 37.5
-    assert results["e"] == 25
+    assert results["e"] == 12.5
 
     d = {'t': [], 'glucose': []}
     data_hat = pd.DataFrame(data=d)
