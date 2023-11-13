@@ -36,6 +36,9 @@ def adrr(data):
     Kovatchev et al., "Evaluation of a new measure of blood glucose variability in
     diabetes", Diabetes Care, 2006, vol. 29, pp. 2433-2438. DOI: 10.2337/dc06-1085.
     """
+    if data.t.values.size == 0:
+        return np.nan
+    
     # Setup the formula parameters
     alpha = 1.084
     beta = 5.381

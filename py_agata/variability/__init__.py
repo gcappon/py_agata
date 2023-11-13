@@ -200,6 +200,8 @@ def range_glucose(data):
     Wikipedia on range: https://en.wikipedia.org/wiki/Range_(statistics) (Accessed: 2020-12-10).
     """
     # Return the result
+    if(data.glucose.values.size == 0):
+        return np.nan
     return np.nanmax(data.glucose.values) - np.nanmin(data.glucose.values)
 
 
@@ -541,6 +543,9 @@ def mage_plus_index(data):
     """
 
     # Get the first and last day limits
+    if data.t.values.size == 0:
+        return np.nan
+
     first_day = pd.to_datetime(data.t.values[0]).to_pydatetime()
     first_day = first_day.replace(hour=0, minute=0, second=0)
     last_day = pd.to_datetime(data.t.values[-1]).to_pydatetime()
@@ -704,7 +709,8 @@ def mage_minus_index(data):
     diabetic instability", Diabetes, 1970, vol. 19, pp. 644-655. DOI:
     10.2337/diab.19.9.644.
     """
-
+    if data.t.values.size == 0:
+        return np.nan
     # Get the first and last day limits
     first_day = pd.to_datetime(data.t.values[0]).to_pydatetime()
     first_day = first_day.replace(hour=0, minute=0, second=0)
@@ -869,6 +875,8 @@ def mage_index(data):
     diabetic instability", Diabetes, 1970, vol. 19, pp. 644-655. DOI:
     10.2337/diab.19.9.644.
     """
+    if np.isnan(mage_plus_index(data)) and np.isnan(mage_minus_index(data)):
+        return np.nan
     return np.nanmean([mage_plus_index(data), mage_minus_index(data)])
 
 
@@ -905,6 +913,9 @@ def ef_index(data):
     diabetic instability", Diabetes, 1970, vol. 19, pp. 644-655. DOI:
     10.2337/diab.19.9.644.
     """
+    if data.t.values.size == 0:
+        return np.nan
+
     # Set the fixed parameter
     ef_th = 75
 
@@ -1128,6 +1139,8 @@ def sddm_index(data):
     variability using continuous glucose monitoring", Diabetes Technology &
     Therapeutics, 2009, vol. 11, pp. 551-565. DOI: 10.1089/dia.2009.0015.
     """
+    if data.t.values.size == 0:
+        return np.nan
     # Get the first and last day limits
     first_day = pd.to_datetime(data.t.values[0]).to_pydatetime()
     first_day = first_day.replace(hour=0, minute=0, second=0)
@@ -1186,6 +1199,8 @@ def sdw_index(data):
     variability using continuous glucose monitoring", Diabetes Technology &
     Therapeutics, 2009, vol. 11, pp. 551-565. DOI: 10.1089/dia.2009.0015.
     """
+    if data.t.values.size == 0:
+        return np.nan
     # Get the first and last day limits
     first_day = pd.to_datetime(data.t.values[0]).to_pydatetime()
     first_day = first_day.replace(hour=0, minute=0, second=0)
@@ -1330,6 +1345,9 @@ def cvga(data):
     Science and Technology, 2008, vol. 2, pp. 630-635. DOI:
     10.1177/193229680800200414.
     """
+    if data.t.values.size == 0:
+        return np.nan
+
     roc = glucose_roc(data)
 
     x = np.min([np.max([110 - np.nanmin(data.glucose.values), 0]), 60])

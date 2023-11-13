@@ -87,6 +87,9 @@ def test_compare_two_arms():
     d = {'t': t, 'glucose': glucose}
     data_4 = pd.DataFrame(data=d)
 
+    d = {'t': [], 'glucose': []}
+    data_5 = pd.DataFrame(data=d)
+
     # Tests
 
     # Diabetes
@@ -286,3 +289,6 @@ def test_compare_two_arms():
 
     assert results["arm_2"]["events"]["extended_hypoglycemic_events"]["mean_duration"]["values"].size == 4
     assert results["arm_2"]["events"]["extended_hypoglycemic_events"]["events_per_week"]["values"].size == 4
+
+    results, stats = agata.compare_two_arms(arm_1=[data_5, data_5, data_5, data_5], arm_2=[data_5, data_5, data_5, data_5], is_paired=True, alpha=0.05)
+    results, stats = agata.compare_two_arms(arm_1=[data_5, data_5, data_5, data_5], arm_2=[data_5, data_5, data_5], is_paired=False, alpha=0.05)
