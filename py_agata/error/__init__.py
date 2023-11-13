@@ -39,8 +39,9 @@ def rmse(data, data_hat):
     """
     if data.glucose.values.size == 0:
         return np.nan
-
     idxs = np.where(np.logical_and(~np.isnan(data.glucose.values), ~np.isnan(data_hat.glucose.values)))[0]
+    if idxs.size == 0:
+        return np.nan
     return np.sqrt(np.mean((data.glucose.values[idxs] - data_hat.glucose.values[idxs]) ** 2))
 
 
@@ -79,8 +80,9 @@ def mard(data, data_hat):
     """
     if data.glucose.values.size == 0:
         return np.nan
-
     idxs = np.where(np.logical_and(~np.isnan(data.glucose.values), ~np.isnan(data_hat.glucose.values)))[0]
+    if idxs.size == 0:
+        return np.nan
     return 100 * np.mean(np.abs(np.divide(data.glucose.values[idxs] - data_hat.glucose.values[idxs],data.glucose.values[idxs])))
 
 
@@ -118,8 +120,9 @@ def cod(data, data_hat):
     """
     if data.glucose.values.size == 0:
         return np.nan
-
     idxs = np.where(np.logical_and(~np.isnan(data.glucose.values), ~np.isnan(data_hat.glucose.values)))[0]
+    if idxs.size == 0:
+        return np.nan
     residuals = data.glucose.values[idxs] - data_hat.glucose.values[idxs]
     return 100 * (1 - np.linalg.norm(residuals,ord=2)**2 / np.linalg.norm(data.glucose.values[idxs] - np.mean(data.glucose.values[idxs]),ord=2)**2)
 
@@ -166,7 +169,19 @@ def clarke(data, data_hat):
     Clarke et al., "Evaluating clinical accuracy of systems for self-monitoring
     of blood glucose", Diabetes Care, 1987, vol. 10, pp. 622–628. DOI: 10.2337/diacare.10.5.622.
     """
+
+    results = dict()
+    results["a"] = np.nan
+    results["b"] = np.nan
+    results["c"] = np.nan
+    results["d"] = np.nan
+    results["e"] = np.nan
+    if data.glucose.values.size == 0:
+        return results
     idxs = np.where(np.logical_and(~np.isnan(data.glucose.values), ~np.isnan(data_hat.glucose.values)))[0]
+    if idxs.size == 0:
+        return results
+
     y = data.glucose.values[idxs]
     yp = data_hat.glucose.values[idxs]
 
@@ -187,8 +202,6 @@ def clarke(data, data_hat):
             total[1] += 1
 
     total = total/n*100
-
-    results = dict()
     results["a"] = total[0]
     results["b"] = total[1]
     results["c"] = total[2]
@@ -259,7 +272,12 @@ def g_rmse(data, data_hat):
     identify models", IEEE Transactions on Biomedical Engineering, 2012,
     vol. 59, pp. 1281-1290. DOI: 10.1109/TBME.2012.2185234.
     """
+    if data.glucose.values.size == 0:
+        return np.nan
     idxs = np.where(np.logical_and(~np.isnan(data.glucose.values), ~np.isnan(data_hat.glucose.values)))[0]
+    if idxs.size == 0:
+        return np.nan
+
     y = data.glucose.values[idxs]
     yp = data_hat.glucose.values[idxs]
 
@@ -323,7 +341,12 @@ def time_delay(data, data_hat, ph):
     identify models", IEEE Transactions on Biomedical Engineering, 2012,
     vol. 59, pp. 1281-1290. DOI: 10.1109/TBME.2012.2185234.
     """
+    if data.glucose.values.size == 0:
+        return np.nan
     idxs = np.where(np.logical_and(~np.isnan(data.glucose.values), ~np.isnan(data_hat.glucose.values)))[0]
+    if idxs.size == 0:
+        return np.nan
+
     y = data.glucose.values[idxs]
     yp = data_hat.glucose.values[idxs]
 

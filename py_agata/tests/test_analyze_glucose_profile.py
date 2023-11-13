@@ -51,9 +51,9 @@ def test_analyze_glucose_profile():
     # Tests
 
     # Diabetes
-    agata = Agata(data=data, glycemic_target='diabetes')
+    agata = Agata(glycemic_target='diabetes')
 
-    results = agata.analyze_glucose_profile()
+    results = agata.analyze_glucose_profile(data=data)
     assert type(results) is dict
 
     # Variability metrics
@@ -111,9 +111,9 @@ def test_analyze_glucose_profile():
     assert np.round(results['glycemic_transformation']['mr_index'] * 100) / 100 == 28.92
 
     # Pregnancy
-    agata = Agata(data=data, glycemic_target='pregnancy')
+    agata = Agata(glycemic_target='pregnancy')
 
-    results = agata.analyze_glucose_profile()
+    results = agata.analyze_glucose_profile(data=data)
     assert type(results) is dict
 
     # Variability metrics
