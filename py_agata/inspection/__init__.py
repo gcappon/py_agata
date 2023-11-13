@@ -3,6 +3,8 @@ import pandas as pd
 from datetime import datetime, timedelta
 from copy import copy
 
+from py_agata.input_validator import *
+
 def find_nan_islands(data, th):
     """
     Locates nan sequences in vector `data`, and classifies them based on their length (longer or
@@ -42,6 +44,12 @@ def find_nan_islands(data, th):
     ----------
     None
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+    check_int_parameter(th)
+
     # Get glucose data
     glucose = data.glucose.values
 
@@ -115,6 +123,11 @@ def missing_glucose_percentage(data):
     ----------
     None
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     if data.glucose.values.size == 0:
         return np.nan
 
@@ -151,6 +164,11 @@ def number_days_of_observation(data):
     ----------
     None
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     if data.glucose.values.size == 0:
         return np.nan
 
@@ -159,7 +177,7 @@ def number_days_of_observation(data):
     return (end_time - start_time).seconds / (60 * 60 * 24)
 
 
-def find_hypoglycemic_events(data, th=70):
+def find_hypoglycemic_events(data, th=70.):
     """
     Finds the hypoglycemic events in a given glucose trace. The definition of hypoglycemic event can be found
     in Battellino et al. (event begins: at least consecutive 15 minutes < threshold mg/dl, event ends: at least
@@ -206,6 +224,12 @@ def find_hypoglycemic_events(data, th=70):
     Diabetes & Endocrinology, 2022, pp. 1-16.
     DOI: https://doi.org/10.1016/S2213-8587(22)00319-9.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+    check_float_parameter(th)
+
     hypoglycemic_events = dict()
     hypoglycemic_events['time_start'] = np.empty(shape=0, dtype=datetime)
     hypoglycemic_events['time_end'] = np.empty(shape=0, dtype=datetime)
@@ -288,7 +312,7 @@ def find_hypoglycemic_events(data, th=70):
     return hypoglycemic_events
 
 
-def find_hyperglycemic_events(data, th=180):
+def find_hyperglycemic_events(data, th=180.):
     """
     Finds the hyperglycemic events in a given glucose trace. The definition of hyperglycemic event can be found
     in Battellino et al. (event begins: at least consecutive 15 minutes > threshold mg/dl, event ends: at least
@@ -335,6 +359,12 @@ def find_hyperglycemic_events(data, th=180):
     Diabetes & Endocrinology, 2022, pp. 1-16.
     DOI: https://doi.org/10.1016/S2213-8587(22)00319-9.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+    check_float_parameter(th)
+
     hyperglycemic_events = dict()
     hyperglycemic_events['time_start'] = np.empty(shape=0, dtype=datetime)
     hyperglycemic_events['time_end'] = np.empty(shape=0, dtype=datetime)
@@ -417,7 +447,7 @@ def find_hyperglycemic_events(data, th=180):
     return hyperglycemic_events
 
 
-def find_extended_hypoglycemic_events(data, th=54):
+def find_extended_hypoglycemic_events(data, th=54.):
     """
     Finds the extended hypoglycemic events in a given glucose trace. The definition of hypoglycemic event can be found
     in Battellino et al. (event begins: at least consecutive 120 minutes < threshold mg/dl, event ends: at least
@@ -464,6 +494,12 @@ def find_extended_hypoglycemic_events(data, th=54):
     Diabetes & Endocrinology, 2022, pp. 1-16.
     DOI: https://doi.org/10.1016/S2213-8587(22)00319-9.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+    check_float_parameter(th)
+
     extended_hypoglycemic_events = dict()
     extended_hypoglycemic_events['time_start'] = np.empty(shape=0, dtype=datetime)
     extended_hypoglycemic_events['time_end'] = np.empty(shape=0, dtype=datetime)
@@ -619,12 +655,18 @@ def find_hypoglycemic_events_by_level(data, glycemic_target = 'diabetes'):
     Diabetes & Endocrinology, 2022, pp. 1-16.
     DOI: https://doi.org/10.1016/S2213-8587(22)00319-9.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+    check_str_parameter(glycemic_target)
+
     if glycemic_target == 'diabetes':
-        th_l1 = 70
-        th_l2 = 54
+        th_l1 = 70.
+        th_l2 = 54.
     else:
-        th_l1 = 63
-        th_l2 = 54
+        th_l1 = 63.
+        th_l2 = 54.
 
     # Get all hypoglycemic events
     all_hypo_events = find_hypoglycemic_events(data, th=th_l1)
@@ -727,12 +769,18 @@ def find_hyperglycemic_events_by_level(data, glycemic_target='diabetes'):
     Diabetes & Endocrinology, 2022, pp. 1-16.
     DOI: https://doi.org/10.1016/S2213-8587(22)00319-9.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+    check_str_parameter(glycemic_target)
+
     if glycemic_target == 'diabetes':
-        th_l1 = 180
-        th_l2 = 250
+        th_l1 = 180.
+        th_l2 = 250.
     else:
-        th_l1 = 140
-        th_l2 = 250
+        th_l1 = 140.
+        th_l2 = 250.
 
     # Get all hyperglycemic events
     all_hyper_events = find_hyperglycemic_events(data, th=th_l1)

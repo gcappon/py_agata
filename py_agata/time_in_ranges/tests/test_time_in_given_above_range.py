@@ -49,9 +49,9 @@ def test_time_in_given_above_range():
     data = pd.DataFrame(data=d)
 
     #Tests
-    assert np.isnan(time_in_given_above_range(data,200, include_th=False)) == False
-    assert time_in_given_above_range(data,200, include_th=False) == 20
-    assert time_in_given_above_range(data,200, include_th=True) == 40
+    assert np.isnan(time_in_given_above_range(data,200., include_th=False)) == False
+    assert time_in_given_above_range(data,200., include_th=False) == 20
+    assert time_in_given_above_range(data,200., include_th=True) == 40
 
     # Set empty data
     t = np.arange(datetime(2000, 1, 1, 1, 0, 0), datetime(2000, 1, 1, 1, 55, 0), timedelta(minutes=5)).astype(
@@ -68,4 +68,4 @@ def test_time_in_given_above_range():
     data = pd.DataFrame(data=d)
 
     # Tests
-    assert np.isnan(time_in_given_above_range(data,th=200))
+    assert np.isnan(time_in_given_above_range(data,th=200.))

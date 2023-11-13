@@ -3,13 +3,13 @@ import numpy as np
 import datetime
 from datetime import datetime, timedelta
 
-from py_agata.variability import mean_glucose
+from py_agata.input_validator import check_dataframe
 
 import pytest
 
-def test_mean_glucose():
+def test_check_dataframe():
     """
-    Unit test of mean_glucose function.
+    Unit test of check_dataframe function.
 
     Parameters
     ----------
@@ -49,23 +49,8 @@ def test_mean_glucose():
     d = {'t': t, 'glucose': glucose}
     data = pd.DataFrame(data=d)
 
-    #Tests
-    assert np.isnan(mean_glucose(data)) == False
-    assert mean_glucose(data) == 138
-
-    # Set empty data
-    t = np.arange(datetime(2000, 1, 1, 1, 0, 0), datetime(2000, 1, 1, 1, 55, 0), timedelta(minutes=5)).astype(
-        datetime)
-    glucose = np.zeros(shape=(t.shape[0],))
-    glucose[0] = np.nan
-    glucose[1:3] = [np.nan, np.nan]
-    glucose[3] = np.nan
-    glucose[4:6] = [np.nan, np.nan]
-    glucose[6:8] = [np.nan, np.nan]
-    glucose[8:10] = [np.nan, np.nan]
-    glucose[10] = np.nan
-    d = {'t': t, 'glucose': glucose}
-    data = pd.DataFrame(data=d)
-
-    # Tests
-    assert np.isnan(mean_glucose(data))
+    # Test not error
+    assert check_dataframe(data)
+    # Test errors
+    with pytest.raises(Exception):
+        check_dataframe([])

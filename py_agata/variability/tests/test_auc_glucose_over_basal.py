@@ -49,8 +49,8 @@ def test_auc_glucose_over_basal():
     data = pd.DataFrame(data=d)
 
     #Tests
-    assert np.isnan(auc_glucose_over_basal(data,120)) == False
-    assert np.round(auc_glucose_over_basal(data,120)*100)/100 == 900
+    assert np.isnan(auc_glucose_over_basal(data,120.)) == False
+    assert np.round(auc_glucose_over_basal(data,120.)*100)/100 == 900
 
     # Set empty data
     t = np.arange(datetime(2000, 1, 1, 1, 0, 0), datetime(2000, 1, 1, 1, 55, 0), timedelta(minutes=5)).astype(
@@ -67,4 +67,4 @@ def test_auc_glucose_over_basal():
     data = pd.DataFrame(data=d)
 
     # Tests
-    assert np.isnan(auc_glucose_over_basal(data,120))
+    assert np.isnan(auc_glucose_over_basal(data,120.))

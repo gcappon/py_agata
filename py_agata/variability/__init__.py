@@ -4,6 +4,7 @@ from scipy.stats import iqr
 from scipy.signal import find_peaks
 from datetime import timedelta
 
+from py_agata.input_validator import *
 from py_agata.time_in_ranges import time_in_target, time_in_hypoglycemia
 
 
@@ -38,6 +39,11 @@ def mean_glucose(data):
     ----------
     Wikipedia on mean: https://en.wikipedia.org/wiki/Mean (Accessed: 2020-12-10).
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     # Get non-nan values
     values = data.glucose.values[~np.isnan(data.glucose.values)]
 
@@ -80,6 +86,11 @@ def median_glucose(data):
     ----------
     Wikipedia on median: https://en.wikipedia.org/wiki/Median (Accessed: 2020-12-10).
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     # Get non-nan values
     values = data.glucose.values[~np.isnan(data.glucose.values)]
 
@@ -122,6 +133,11 @@ def std_glucose(data):
     ----------
     Wikipedia on standard deviation: https://en.wikipedia.org/wiki/Standard_deviation (Accessed: 2020-12-10).
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     # Get non-nan values
     values = data.glucose.values[~np.isnan(data.glucose.values)]
 
@@ -164,6 +180,11 @@ def cv_glucose(data):
     ----------
     Wikipedia on coefficient of variation: https://en.wikipedia.org/wiki/Coefficient_of_variation (Accessed: 2020-12-10).
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     # Return the result
     return 100 * std_glucose(data) / mean_glucose(data)
 
@@ -199,6 +220,11 @@ def range_glucose(data):
     ----------
     Wikipedia on range: https://en.wikipedia.org/wiki/Range_(statistics) (Accessed: 2020-12-10).
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     # Return the result
     if(data.glucose.values.size == 0):
         return np.nan
@@ -236,6 +262,10 @@ def iqr_glucose(data):
     ----------
     Wikipedia on IQR: https://en.wikipedia.org/wiki/Interquartile_range (Accessed: 2020-12-10).
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
 
     # Get rid of nans
     values = data.glucose.values[~np.isnan(data.glucose.values)]
@@ -275,6 +305,12 @@ def auc_glucose_over_basal(data, basal):
     ----------
     None
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+    check_float_parameter(basal)
+
     # Get non-nan values
     values = data.glucose.values[~np.isnan(data.glucose.values)]
 
@@ -325,8 +361,13 @@ def auc_glucose(data):
     ----------
     None
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     # Return results
-    return auc_glucose_over_basal(data, 0)
+    return auc_glucose_over_basal(data, 0.)
 
 
 def gmi(data):
@@ -363,6 +404,11 @@ def gmi(data):
     for estimating A1C from continuous glucose monitoring", Diabetes Care,
     2018, vol. 41, pp. 2275-2280. DOI: 10.2337/dc18-1581.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     # Return results
     return 3.31 + 0.02392 * mean_glucose(data)
 
@@ -400,6 +446,11 @@ def cogi(data):
     Continuous Glucose Monitoring Index", Journal of Diabetes Science and Technology,
     2019, vol. 14, pp. 277-283. DOI: 10.1177/1932296819838525.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     # Compute TIR component
     tir = time_in_target(data)*0.5
 
@@ -448,6 +499,11 @@ def conga(data):
     utilizing glycemic variation", Diabetes Technol Ther, 2005, vol. 7,
     pp. 253–263. DOI: 10.1089/dia.2005.7.253.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     # Set the CONGAOrd hyperparameter to 4 (number of hours in the past it
     # refers to)
     conga_ord = 4
@@ -505,6 +561,11 @@ def j_index(data):
     glucose control in diabetic patients", Hormone and Metabolic Reseach,
     1995, vol. 27, pp. 41-42. DOI: 10.1055/s-2007-979906.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     return 1e-3 * (mean_glucose(data) + std_glucose(data)) ** 2
 
 
@@ -541,6 +602,10 @@ def mage_plus_index(data):
     diabetic instability", Diabetes, 1970, vol. 19, pp. 644-655. DOI:
     10.2337/diab.19.9.644.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
 
     # Get the first and last day limits
     if data.t.values.size == 0:
@@ -709,6 +774,11 @@ def mage_minus_index(data):
     diabetic instability", Diabetes, 1970, vol. 19, pp. 644-655. DOI:
     10.2337/diab.19.9.644.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     if data.t.values.size == 0:
         return np.nan
     # Get the first and last day limits
@@ -875,6 +945,11 @@ def mage_index(data):
     diabetic instability", Diabetes, 1970, vol. 19, pp. 644-655. DOI:
     10.2337/diab.19.9.644.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     if np.isnan(mage_plus_index(data)) and np.isnan(mage_minus_index(data)):
         return np.nan
     return np.nanmean([mage_plus_index(data), mage_minus_index(data)])
@@ -913,6 +988,11 @@ def ef_index(data):
     diabetic instability", Diabetes, 1970, vol. 19, pp. 644-655. DOI:
     10.2337/diab.19.9.644.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     if data.t.values.size == 0:
         return np.nan
 
@@ -1082,6 +1162,11 @@ def modd(data):
     glycaemia: a further measure of diabetic instability", Diabetologia,
     1972, vol. 8, pp. 342–348. DOI: 10.1007/BF01218495.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     # Build vectors
     yesterday = timedelta(minutes=1440)
 
@@ -1139,6 +1224,11 @@ def sddm_index(data):
     variability using continuous glucose monitoring", Diabetes Technology &
     Therapeutics, 2009, vol. 11, pp. 551-565. DOI: 10.1089/dia.2009.0015.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     if data.t.values.size == 0:
         return np.nan
     # Get the first and last day limits
@@ -1199,6 +1289,11 @@ def sdw_index(data):
     variability using continuous glucose monitoring", Diabetes Technology &
     Therapeutics, 2009, vol. 11, pp. 551-565. DOI: 10.1089/dia.2009.0015.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     if data.t.values.size == 0:
         return np.nan
     # Get the first and last day limits
@@ -1261,6 +1356,11 @@ def glucose_roc(data):
     Monitor Data", Diabetes Technol Ther, 2009,
     vol. 11, pp. S45-S54. DOI: 10.1089=dia.2008.0138.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     g_roc = np.empty(shape=(data.glucose.values.size,))
     g_roc.fill(np.nan)
 
@@ -1306,6 +1406,11 @@ def std_glucose_roc(data):
     Monitor Data", Diabetes Technol Ther, 2009,
     vol. 11, pp. S45-S54. DOI: 10.1089=dia.2008.0138.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     roc = glucose_roc(data)
 
     return np.nanstd(roc.glucose_roc.values, ddof=1)
@@ -1345,6 +1450,11 @@ def cvga(data):
     Science and Technology, 2008, vol. 2, pp. 630-635. DOI:
     10.1177/193229680800200414.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     if data.t.values.size == 0:
         return np.nan
 

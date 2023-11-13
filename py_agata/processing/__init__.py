@@ -6,6 +6,7 @@ from copy import copy
 from scipy.interpolate import interp1d
 
 from py_agata.inspection import find_nan_islands
+from py_agata.input_validator import *
 
 def detrend_glucose(data):
     """
@@ -38,6 +39,11 @@ def detrend_glucose(data):
     ----------
     None
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     # Compute the slope
     first_point = np.where(~np.isnan(data.glucose.values))[0]
     if first_point.size > 1:
@@ -90,13 +96,19 @@ def impute_glucose(data, max_gap):
     ----------
     None
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+    check_int_parameter(max_gap)
+
     # Get the sample time
     t0 = pd.to_datetime(data.t.values[0]).to_pydatetime()
     t1 = pd.to_datetime(data.t.values[1]).to_pydatetime()
     sample_time = (t1 - t0).total_seconds() / 60
 
     # Find the interpolable gaps
-    short_nan, long_nan, nan_start, nan_end = find_nan_islands(data, np.round(max_gap / sample_time))
+    short_nan, long_nan, nan_start, nan_end = find_nan_islands(data, int(np.round(max_gap / sample_time)))
 
     # Impute data
     data_imputed = copy(data)
@@ -140,6 +152,10 @@ def retime_glucose(data, timestep):
     ----------
     None
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+
     data_temp = copy(data)
     start_time = pd.to_datetime(data_temp.t.values[0]).to_pydatetime()
     start_time = start_time.replace(second=0)

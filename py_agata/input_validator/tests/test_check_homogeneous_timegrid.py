@@ -3,12 +3,13 @@ import numpy as np
 import datetime
 from datetime import datetime, timedelta
 
-from py_agata.time_in_ranges import time_in_given_below_range
+from py_agata.input_validator import check_homogeneous_timegrid
 
+import pytest
 
-def test_time_in_given_below_range():
+def test_check_homogeneous_timegrid():
     """
-    Unit test of time_in_given_below_range function.
+    Unit test of check_homogeneous_timegrid function.
 
     Parameters
     ----------
@@ -39,33 +40,39 @@ def test_time_in_given_below_range():
         datetime)
     glucose = np.zeros(shape=(t.shape[0],))
     glucose[0] = 40
-    glucose[1:3] = [60, 60]
+    glucose[1:3] = [50, 50]
     glucose[3] = 80
-    glucose[4:6] = [120, 130]
+    glucose[4:6] = [120, 120]
     glucose[6:8] = [200, 200]
     glucose[8:10] = [260, 260]
     glucose[10] = np.nan
     d = {'t': t, 'glucose': glucose}
     data = pd.DataFrame(data=d)
 
-    #Tests
-    assert np.isnan(time_in_given_below_range(data,60., include_th=False)) == False
-    assert time_in_given_below_range(data,60., include_th=False) == 10
-    assert time_in_given_below_range(data,60., include_th=True) == 30
+    # Test not error
+    assert check_homogeneous_timegrid(data)
 
-    # Set empty data
-    t = np.arange(datetime(2000, 1, 1, 1, 0, 0), datetime(2000, 1, 1, 1, 55, 0), timedelta(minutes=5)).astype(
+    d = {'t': [], 'glucose': []}
+    data = pd.DataFrame(data=d)
+
+    # Test not error
+    assert check_homogeneous_timegrid(data)
+
+
+    t = np.arange(datetime(2000, 1, 1, 0, 0, 0), datetime(2000, 1, 1, 0, 55, 0), timedelta(minutes=5)).astype(
         datetime)
+    t[-1] = datetime(2000, 1, 2, 0, 0, 0)
     glucose = np.zeros(shape=(t.shape[0],))
-    glucose[0] = np.nan
-    glucose[1:3] = [np.nan, np.nan]
-    glucose[3] = np.nan
-    glucose[4:6] = [np.nan, np.nan]
-    glucose[6:8] = [np.nan, np.nan]
-    glucose[8:10] = [np.nan, np.nan]
+    glucose[0] = 40
+    glucose[1:3] = [50, 50]
+    glucose[3] = 80
+    glucose[4:6] = [120, 120]
+    glucose[6:8] = [200, 200]
+    glucose[8:10] = [260, 260]
     glucose[10] = np.nan
     d = {'t': t, 'glucose': glucose}
     data = pd.DataFrame(data=d)
 
-    # Tests
-    assert np.isnan(time_in_given_below_range(data, th=60.))
+    # Test errors
+    with pytest.raises(Exception):
+        check_homogeneous_timegrid(data)

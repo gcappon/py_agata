@@ -3,19 +3,21 @@ import pandas as pd
 from datetime import datetime, timedelta
 from copy import copy
 
+from py_agata.input_validator import *
+
 def to_mmol_l(data):
     """
     Converts a pandas dataframe, numpy array or float containing the glucose data in mgl/dl to mmol/l
 
     Parameters
     ----------
-    data: pd.DataFrame, np.ndarray, float
-        Pandas dataframe, numpy array or float containing the glucose data in mg/dl
+    data: pd.DataFrame
+        Pandas dataframe containing the glucose data in mg/dl
 
     Returns
     -------
-    data: pd.DataFrame, np.ndarray, float
-        Pandas dataframe, numpy array or float containing the glucose data in mmol/l
+    data: pd.DataFrame
+        Pandas dataframe containing the glucose data in mmol/l
 
     Raises
     ------
@@ -33,10 +35,11 @@ def to_mmol_l(data):
     ----------
     None
     """
-    if type(data) is pd.DataFrame:
-        return pd.DataFrame(data={'t': data.t.values, 'glucose': data.glucose.values/18.018})
-    else:
-        return data/18.018
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+
+    return pd.DataFrame(data={'t': data.t.values, 'glucose': data.glucose.values/18.018})
 
 
 def to_mg_dl(data):
@@ -45,13 +48,13 @@ def to_mg_dl(data):
 
     Parameters
     ----------
-    data: pd.DataFrame, np.ndarray, float
-        Pandas dataframe, numpy array or float containing the glucose data in mmol/l
+    data: pd.DataFrame
+        Pandas dataframe containing the glucose data in mmol/l
 
     Returns
     -------
-    data: pd.DataFrame, np.ndarray, float
-        Pandas dataframe, numpy array or float containing the glucose data in mg/dl
+    data: pd.DataFrame
+        Pandas dataframe containing the glucose data in mg/dl
 
     Raises
     ------
@@ -69,10 +72,11 @@ def to_mg_dl(data):
     ----------
     None
     """
-    if type(data) is pd.DataFrame:
-        return pd.DataFrame(data={'t': data.t.values, 'glucose': data.glucose.values*18.018})
-    else:
-        return data*18.018
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+
+    return pd.DataFrame(data={'t': data.t.values, 'glucose': data.glucose.values*18.018})
 
 
 def glucose_time_vectors_to_dataframe(glucose, t):
@@ -108,6 +112,11 @@ def glucose_time_vectors_to_dataframe(glucose, t):
     ----------
     None
     """
+    # Check input
+    check_same_length_ndarray(glucose, t)
+    check_ndarray_float_parameter(glucose)
+    check_ndarray_datetime_parameter(t)
+
     return pd.DataFrame(data={'t': t, 'glucose': glucose})
 
 
@@ -148,6 +157,11 @@ def glucose_vector_to_dataframe(glucose, sample_time, start_time=datetime(2000, 
     ----------
     None
     """
+    # Check input
+    check_ndarray_float_parameter(glucose)
+    check_int_parameter(sample_time)
+    check_datetime_parameter(start_time)
+
     time_interval = timedelta(minutes=sample_time)
     end_time = start_time + timedelta(minutes=(glucose.size*sample_time - sample_time))
     t = pd.date_range(start_time, end_time, freq=time_interval)
@@ -188,6 +202,10 @@ def read_dexcom_data(file, extension='xlsx'):
     ----------
     None
     """
+    # Check input
+    check_str_parameter(file)
+    check_str_parameter(extension)
+
     df = pd.read_excel(file) if extension == 'xlsx' else pd.read_csv(file)
 
     egvs = np.where(df[df.columns[2]] == 'EGV')[0]
@@ -254,6 +272,10 @@ def read_eversense_data(file, extension='xlsx'):
     ----------
     None
     """
+    # Check input
+    check_str_parameter(file)
+    check_str_parameter(extension)
+
     df = pd.read_excel(file) if extension == 'xlsx' else pd.read_csv(file)
 
     g_raw = df[df.columns[2]]
@@ -313,6 +335,10 @@ def read_freestyle_libre_data(file, extension='xlsx'):
     ----------
     None
     """
+    # Check input
+    check_str_parameter(file)
+    check_str_parameter(extension)
+
     df = pd.read_excel(file) if extension == 'xlsx' else pd.read_csv(file)
 
     g_raw = df[df.columns[6]][2:]

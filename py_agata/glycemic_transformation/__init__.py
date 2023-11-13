@@ -5,7 +5,7 @@ from scipy.signal import find_peaks
 from datetime import timedelta
 
 from py_agata.time_in_ranges import time_in_target, time_in_hypoglycemia
-
+from py_agata.input_validator import *
 
 def mr_index(data, r=100):
     """
@@ -41,6 +41,12 @@ def mr_index(data, r=100):
     Schlichtkrull et al., "The M-value, an index of blood-sugar control in diabetics", Acta Medica Scandinavica, 1965,
     vol. 177, pp. 95-102. DOI: 10.1111/j.0954-6820.1965.tb01810.x
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+    check_int_parameter(r)
+
     # Get non-nan values
     values = data.glucose.values[~np.isnan(data.glucose.values)]
 
@@ -86,6 +92,11 @@ def hypo_index(data):
     data: glycemic variability and quality of glycemic control", Diabetes
     %  Technology & Therapeutics, 2009, vol. 11, pp. S55-S67. DOI: 10.1089/dia.2008.0132.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     # Get non-nan values
     values = data.glucose.values[~np.isnan(data.glucose.values)]
 
@@ -135,6 +146,11 @@ def hyper_index(data):
     data: glycemic variability and quality of glycemic control", Diabetes
     %  Technology & Therapeutics, 2009, vol. 11, pp. S55-S67. DOI: 10.1089/dia.2008.0132.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     # Get non-nan values
     values = data.glucose.values[~np.isnan(data.glucose.values)]
 
@@ -184,6 +200,11 @@ def igc(data):
     data: glycemic variability and quality of glycemic control", Diabetes
     %  Technology & Therapeutics, 2009, vol. 11, pp. S55-S67. DOI: 10.1089/dia.2008.0132.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     # Compute metric
     return hypo_index(data) + hyper_index(data)
 
@@ -222,6 +243,11 @@ def grade_hypo_score(data):
     glucose profiles", Diabetic Medicine , 2007, vol. 24, pp. 753-758.
     DOI: 10.1111/j.1464-5491.2007.02119.x.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     # Get non-nan values
     values = data.glucose.values[~np.isnan(data.glucose.values)]
 
@@ -269,6 +295,11 @@ def grade_hyper_score(data):
     glucose profiles", Diabetic Medicine , 2007, vol. 24, pp. 753-758.
     DOI: 10.1111/j.1464-5491.2007.02119.x.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     # Get non-nan values
     values = data.glucose.values[~np.isnan(data.glucose.values)]
 
@@ -316,6 +347,11 @@ def grade_eu_score(data):
     glucose profiles", Diabetic Medicine , 2007, vol. 24, pp. 753-758.
     DOI: 10.1111/j.1464-5491.2007.02119.x.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     return 100 - (grade_hypo_score(data) + grade_hyper_score(data))
 
 
@@ -353,6 +389,11 @@ def grade_score(data):
     glucose profiles", Diabetic Medicine , 2007, vol. 24, pp. 753-758.
     DOI: 10.1111/j.1464-5491.2007.02119.x.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     # Get non-nan values
     values = data.glucose.values[~np.isnan(data.glucose.values)]
 

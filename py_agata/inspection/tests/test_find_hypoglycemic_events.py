@@ -82,7 +82,7 @@ def test_find_hypoglycemic_events():
     assert results['events_per_week'] == 96
 
     # 3. check results (with custom threshold)
-    results = find_hypoglycemic_events(data, th=45)
+    results = find_hypoglycemic_events(data, th=45.)
     assert results['time_start'].size == results['duration'].size
     assert results['time_end'].size == results['duration'].size
     assert results['time_start'].size == 0

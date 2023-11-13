@@ -70,6 +70,11 @@ class Agata:
         ----------
         None
         """
+        # Check input
+        check_dataframe(data)
+        check_data_columns(data)
+        check_homogeneous_timegrid(data)
+
         results = dict()
 
         # Get variability metrics
@@ -183,6 +188,12 @@ class Agata:
         ----------
         None
         """
+        for d in data:
+            # Check input
+            check_dataframe(d)
+            check_data_columns(d)
+            check_homogeneous_timegrid(d)
+
         results = dict()
 
 
@@ -487,6 +498,17 @@ class Agata:
         ----------
         None
         """
+        for d in arm_1:
+            # Check input
+            check_dataframe(d)
+            check_data_columns(d)
+            check_homogeneous_timegrid(d)
+        for d in arm_2:
+            # Check input
+            check_dataframe(d)
+            check_data_columns(d)
+            check_homogeneous_timegrid(d)
+
         results = dict()
         results["arm_1"] = self.analyze_one_arm(arm_1)
         results["arm_2"] = self.analyze_one_arm(arm_2)

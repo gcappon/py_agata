@@ -2,8 +2,9 @@ import numpy as np
 import pandas as pd
 
 from datetime import datetime, timedelta
-
 from copy import copy
+
+from py_agata.input_validator import *
 
 def rmse(data, data_hat):
     """
@@ -37,6 +38,15 @@ def rmse(data, data_hat):
     ----------
     Wikipedia on RMSE: https://en.wikipedia.org/wiki/Root-mean-square_deviation. (Accessed: 2020-12-10)
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+    check_dataframe(data_hat)
+    check_data_columns(data_hat)
+    check_homogeneous_timegrid(data_hat)
+    check_comparable_data(data, data_hat)
+
     if data.glucose.values.size == 0:
         return np.nan
     idxs = np.where(np.logical_and(~np.isnan(data.glucose.values), ~np.isnan(data_hat.glucose.values)))[0]
@@ -78,6 +88,15 @@ def mard(data, data_hat):
     Gini, "Measurement of Inequality and Incomes", The Economic Journal,
     vol. 31, 1921, pp. 124–126. DOI:10.2307/2223319.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+    check_dataframe(data_hat)
+    check_data_columns(data_hat)
+    check_homogeneous_timegrid(data_hat)
+    check_comparable_data(data, data_hat)
+
     if data.glucose.values.size == 0:
         return np.nan
     idxs = np.where(np.logical_and(~np.isnan(data.glucose.values), ~np.isnan(data_hat.glucose.values)))[0]
@@ -118,6 +137,15 @@ def cod(data, data_hat):
     ----------
     Wright, "Correlation and causation", Journal of Agricultural Research, vol. 20, 1921, pp. 557–585.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+    check_dataframe(data_hat)
+    check_data_columns(data_hat)
+    check_homogeneous_timegrid(data_hat)
+    check_comparable_data(data, data_hat)
+
     if data.glucose.values.size == 0:
         return np.nan
     idxs = np.where(np.logical_and(~np.isnan(data.glucose.values), ~np.isnan(data_hat.glucose.values)))[0]
@@ -169,6 +197,14 @@ def clarke(data, data_hat):
     Clarke et al., "Evaluating clinical accuracy of systems for self-monitoring
     of blood glucose", Diabetes Care, 1987, vol. 10, pp. 622–628. DOI: 10.2337/diacare.10.5.622.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+    check_dataframe(data_hat)
+    check_data_columns(data_hat)
+    check_homogeneous_timegrid(data_hat)
+    check_comparable_data(data, data_hat)
 
     results = dict()
     results["a"] = np.nan
@@ -272,6 +308,15 @@ def g_rmse(data, data_hat):
     identify models", IEEE Transactions on Biomedical Engineering, 2012,
     vol. 59, pp. 1281-1290. DOI: 10.1109/TBME.2012.2185234.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+    check_dataframe(data_hat)
+    check_data_columns(data_hat)
+    check_homogeneous_timegrid(data_hat)
+    check_comparable_data(data, data_hat)
+
     if data.glucose.values.size == 0:
         return np.nan
     idxs = np.where(np.logical_and(~np.isnan(data.glucose.values), ~np.isnan(data_hat.glucose.values)))[0]
@@ -341,6 +386,16 @@ def time_delay(data, data_hat, ph):
     identify models", IEEE Transactions on Biomedical Engineering, 2012,
     vol. 59, pp. 1281-1290. DOI: 10.1109/TBME.2012.2185234.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+    check_dataframe(data_hat)
+    check_data_columns(data_hat)
+    check_homogeneous_timegrid(data_hat)
+    check_comparable_data(data, data_hat)
+    check_int_parameter(ph)
+
     if data.glucose.values.size == 0:
         return np.nan
     idxs = np.where(np.logical_and(~np.isnan(data.glucose.values), ~np.isnan(data_hat.glucose.values)))[0]

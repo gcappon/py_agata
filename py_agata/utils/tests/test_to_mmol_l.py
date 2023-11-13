@@ -51,16 +51,3 @@ def test_to_mmol_l():
     assert np.isnan(results.glucose.values[0])
     assert np.round(results.glucose.values[1]*10)/10 == 100
     assert np.round(results.glucose.values[2]*10)/10 == 200
-
-    results = to_mmol_l(np.array([1801.8, np.nan]))
-    assert type(results) is np.ndarray
-    assert np.round(results[0]*10)/10 == 100
-    assert np.isnan(results[1])
-
-    results = to_mmol_l(1801.8)
-    assert type(results) is float
-    assert np.round(results * 10) / 10 == 100
-
-    results = to_mmol_l(np.nan)
-    assert type(results) is float
-    assert np.isnan(results)

@@ -1,8 +1,9 @@
 import numpy as np
 import pandas as pd
 from datetime import datetime,timedelta
-from py_agata.time_in_ranges import time_in_l1_hypoglycemia, time_in_l2_hypoglycemia, time_in_l1_hyperglycemia, time_in_l2_hyperglycemia
 
+from py_agata.time_in_ranges import time_in_l1_hypoglycemia, time_in_l2_hypoglycemia, time_in_l1_hyperglycemia, time_in_l2_hyperglycemia
+from py_agata.input_validator import *
 
 def adrr(data):
     """
@@ -36,6 +37,11 @@ def adrr(data):
     Kovatchev et al., "Evaluation of a new measure of blood glucose variability in
     diabetes", Diabetes Care, 2006, vol. 29, pp. 2433-2438. DOI: 10.2337/dc06-1085.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     if data.t.values.size == 0:
         return np.nan
 
@@ -123,6 +129,11 @@ def lbgi(data):
     Kovatchev et al., "Evaluation of a new measure of blood glucose variability in
     diabetes", Diabetes Care, 2006, vol. 29, pp. 2433-2438. DOI: 10.2337/dc06-1085.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     # Setup the formula parameters
     alpha = 1.084
     beta = 5.381
@@ -175,6 +186,11 @@ def hbgi(data):
     Kovatchev et al., "Evaluation of a new measure of blood glucose variability in
     diabetes", Diabetes Care, 2006, vol. 29, pp. 2433-2438. DOI: 10.2337/dc06-1085.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     # Setup the formula parameters
     alpha = 1.084
     beta = 5.381
@@ -227,6 +243,10 @@ def bgri(data):
     Kovatchev et al., "Evaluation of a new measure of blood glucose variability in
     diabetes", Diabetes Care, 2006, vol. 29, pp. 2433-2438. DOI: 10.2337/dc06-1085.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
 
     # Return bgri
     return lbgi(data) + hbgi(data)
@@ -266,6 +286,10 @@ def gri(data):
     ratings", Journal of Diabetes Science and Technology, 2022, pp. 1-17.
     DOI: 10.1177/19322968221085273.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
 
     #Compute metric
     v_low = time_in_l2_hypoglycemia(data) # VLow( < 54 mg / dL; < 3.0 mmol / L)
@@ -279,7 +303,7 @@ def gri(data):
     return np.min([gri, 100])
 
 
-def dynamic_risk(data, amplification_function='tanh', maximum_amplification=2.5, amplification_rapidity=2, maximum_damping=0.6):
+def dynamic_risk(data, amplification_function='tanh', maximum_amplification=2.5, amplification_rapidity=2., maximum_damping=0.6):
     """
     Computes the dynamic risk of the glucose concentration (ignoring nan values).
 
@@ -319,6 +343,14 @@ def dynamic_risk(data, amplification_function='tanh', maximum_amplification=2.5,
     S. Guerra et al., "A Dynamic Risk Measure from Continuous Glucose Monitoring Data", Diabetes
     Technology & Therapeutics, 2011, vol. 13, pp. 843-852. DOI: 10.1089/dia.2011.0006
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+    check_str_parameter(amplification_function)
+    check_float_parameter(amplification_rapidity)
+    check_float_parameter(maximum_damping)
+    check_float_parameter(maximum_amplification)
 
     # If data is empty return null
     if data.shape[0] == 0:

@@ -50,11 +50,11 @@ def test_time_in_given_range():
     data = pd.DataFrame(data=d)
 
     #Tests
-    assert np.isnan(time_in_given_range(data,60, 120, include_th_l=False, include_th_h=False)) == False
-    assert time_in_given_range(data,60, 120, include_th_l=False, include_th_h=False) == 10
-    assert time_in_given_range(data,60, 120, include_th_l=True, include_th_h=False) == 30
-    assert time_in_given_range(data,60, 120, include_th_l=False, include_th_h=True) == 20
-    assert time_in_given_range(data,60, 120, include_th_l=True, include_th_h=True) == 40
+    assert np.isnan(time_in_given_range(data,60., 120., include_th_l=False, include_th_h=False)) == False
+    assert time_in_given_range(data,60., 120., include_th_l=False, include_th_h=False) == 10
+    assert time_in_given_range(data,60., 120., include_th_l=True, include_th_h=False) == 30
+    assert time_in_given_range(data,60., 120., include_th_l=False, include_th_h=True) == 20
+    assert time_in_given_range(data,60., 120., include_th_l=True, include_th_h=True) == 40
 
     # Set empty data
     t = np.arange(datetime(2000, 1, 1, 1, 0, 0), datetime(2000, 1, 1, 1, 55, 0), timedelta(minutes=5)).astype(
@@ -71,4 +71,4 @@ def test_time_in_given_range():
     data = pd.DataFrame(data=d)
 
     # Tests
-    assert np.isnan(time_in_given_range(data, th_l=60, th_h=120))
+    assert np.isnan(time_in_given_range(data, th_l=60., th_h=120.))

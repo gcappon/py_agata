@@ -1,5 +1,6 @@
 import numpy as np
 
+from py_agata.input_validator import *
 
 def time_in_target(data, glycemic_target='diabetes'):
     """
@@ -37,13 +38,18 @@ def time_in_target(data, glycemic_target='diabetes'):
     trials: An international consensus statement", The Lancet Diabetes &
     Endocrinology, 2022, pp. 1-16. DOI: https://doi.org/10.1016/S2213-8587(22)00319-9.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     # Set the threshold
     if glycemic_target == 'diabetes':
-        th_l = 70
-        th_h = 180
+        th_l = 70.
+        th_h = 180.
     elif glycemic_target == 'pregnancy':
-        th_l = 63
-        th_h = 140
+        th_l = 63.
+        th_h = 140.
     else:
         raise RuntimeError('`glycemic_target` can be `diabetes` or `pregnancy`.')
 
@@ -87,13 +93,18 @@ def time_in_tight_target(data, glycemic_target='diabetes'):
     trials: An international consensus statement", The Lancet Diabetes &
     Endocrinology, 2022, pp. 1-16. DOI: https://doi.org/10.1016/S2213-8587(22)00319-9.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     # Set the threshold
     if glycemic_target == 'diabetes':
-        th_l = 70
-        th_h = 140
+        th_l = 70.
+        th_h = 140.
     elif glycemic_target == 'pregnancy':
-        th_l = 70
-        th_h = 140
+        th_l = 70.
+        th_h = 140.
     else:
         raise RuntimeError('`glycemic_target` can be `diabetes` or `pregnancy`.')
 
@@ -137,11 +148,16 @@ def time_in_hypoglycemia(data, glycemic_target='diabetes'):
     trials: An international consensus statement", The Lancet Diabetes &
     Endocrinology, 2022, pp. 1-16. DOI: https://doi.org/10.1016/S2213-8587(22)00319-9.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     # Set the threshold
     if glycemic_target == 'diabetes':
-        th = 70
+        th = 70.
     elif glycemic_target == 'pregnancy':
-        th = 63
+        th = 63.
     else:
         raise RuntimeError('`glycemic_target` can be `diabetes` or `pregnancy`.')
 
@@ -185,13 +201,18 @@ def time_in_l1_hypoglycemia(data, glycemic_target='diabetes'):
     trials: An international consensus statement", The Lancet Diabetes &
     Endocrinology, 2022, pp. 1-16. DOI: https://doi.org/10.1016/S2213-8587(22)00319-9.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     # Set the threshold
     if glycemic_target == 'diabetes':
-        th_l = 54
-        th_h = 70
+        th_l = 54.
+        th_h = 70.
     elif glycemic_target == 'pregnancy':
-        th_l = 54
-        th_h = 63
+        th_l = 54.
+        th_h = 63.
     else:
         raise RuntimeError('`glycemic_target` can be `diabetes` or `pregnancy`.')
 
@@ -235,11 +256,16 @@ def time_in_l2_hypoglycemia(data, glycemic_target='diabetes'):
     trials: An international consensus statement", The Lancet Diabetes &
     Endocrinology, 2022, pp. 1-16. DOI: https://doi.org/10.1016/S2213-8587(22)00319-9.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     # Set the threshold
     if glycemic_target == 'diabetes':
-        th = 54
+        th = 54.
     elif glycemic_target == 'pregnancy':
-        th = 54
+        th = 54.
     else:
         raise RuntimeError('`glycemic_target` can be `diabetes` or `pregnancy`.')
 
@@ -283,11 +309,16 @@ def time_in_hyperglycemia(data, glycemic_target='diabetes'):
     trials: An international consensus statement", The Lancet Diabetes &
     Endocrinology, 2022, pp. 1-16. DOI: https://doi.org/10.1016/S2213-8587(22)00319-9.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     # Set the threshold
     if glycemic_target == 'diabetes':
-        th = 180
+        th = 180.
     elif glycemic_target == 'pregnancy':
-        th = 140
+        th = 140.
     else:
         raise RuntimeError('`glycemic_target` can be `diabetes` or `pregnancy`.')
 
@@ -331,13 +362,18 @@ def time_in_l1_hyperglycemia(data, glycemic_target='diabetes'):
     trials: An international consensus statement", The Lancet Diabetes &
     Endocrinology, 2022, pp. 1-16. DOI: https://doi.org/10.1016/S2213-8587(22)00319-9.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     # Set the threshold
     if glycemic_target == 'diabetes':
-        th_l = 180
-        th_h = 250
+        th_l = 180.
+        th_h = 250.
     elif glycemic_target == 'pregnancy':
-        th_l = 140
-        th_h = 250
+        th_l = 140.
+        th_h = 250.
     else:
         raise RuntimeError('`glycemic_target` can be `diabetes` or `pregnancy`.')
 
@@ -381,11 +417,16 @@ def time_in_l2_hyperglycemia(data, glycemic_target='diabetes'):
     trials: An international consensus statement", The Lancet Diabetes &
     Endocrinology, 2022, pp. 1-16. DOI: https://doi.org/10.1016/S2213-8587(22)00319-9.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+
     # Set the threshold
     if glycemic_target == 'diabetes':
-        th = 250
+        th = 250.
     elif glycemic_target == 'pregnancy':
-        th = 250
+        th = 250.
     else:
         raise RuntimeError('`glycemic_target` can be `diabetes` or `pregnancy`.')
 
@@ -434,6 +475,13 @@ def time_in_given_range(data, th_l, th_h, include_th_l=False, include_th_h=False
     trials: An international consensus statement", The Lancet Diabetes &
     Endocrinology, 2022, pp. 1-16. DOI: https://doi.org/10.1016/S2213-8587(22)00319-9.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+    check_float_parameter(th_l)
+    check_float_parameter(th_h)
+
     # Get non-nan values
     values = data.glucose.values[~np.isnan(data.glucose.values)]
 
@@ -486,6 +534,12 @@ def time_in_given_above_range(data, th, include_th=False):
     trials: An international consensus statement", The Lancet Diabetes &
     Endocrinology, 2022, pp. 1-16. DOI: https://doi.org/10.1016/S2213-8587(22)00319-9.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+    check_float_parameter(th)
+
     # Get non-nan values
     values = data.glucose.values[~np.isnan(data.glucose.values)]
 
@@ -537,6 +591,12 @@ def time_in_given_below_range(data, th, include_th=False):
     trials: An international consensus statement", The Lancet Diabetes &
     Endocrinology, 2022, pp. 1-16. DOI: https://doi.org/10.1016/S2213-8587(22)00319-9.
     """
+    # Check input
+    check_dataframe(data)
+    check_data_columns(data)
+    check_homogeneous_timegrid(data)
+    check_float_parameter(th)
+
     # Get non-nan values
     values = data.glucose.values[~np.isnan(data.glucose.values)]
 
