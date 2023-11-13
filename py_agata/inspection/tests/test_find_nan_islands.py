@@ -126,3 +126,20 @@ def test_find_nan_islands():
     assert long_nan.size == 0
     assert nan_start.size == 0
     assert nan_end.size == 0
+
+    d = {'t': t[0:2], 'glucose': [120, np.nan]}
+    data = pd.DataFrame(data=d)
+
+    # 7a. check what happens when 1 nan is present
+    short_nan, long_nan, nan_start, nan_end = find_nan_islands(data, 1)
+    assert short_nan.size == 0
+    assert long_nan.size == 1
+    assert nan_start.size == 1
+    assert nan_end.size == 1
+
+    # 7b. check what happens when 1 nan is present
+    short_nan, long_nan, nan_start, nan_end = find_nan_islands(data, 2)
+    assert short_nan.size == 1
+    assert long_nan.size == 0
+    assert nan_start.size == 1
+    assert nan_end.size == 1

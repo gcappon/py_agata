@@ -64,3 +64,19 @@ def test_cod():
     #Tests
     assert np.isnan(cod(data,data_hat)) == False
     assert np.round(cod(data,data_hat)*1000)/1000 == 97.893
+
+    d = {'t': [], 'glucose': []}
+    data_hat = pd.DataFrame(data=d)
+    d = {'t': [], 'glucose': []}
+    data = pd.DataFrame(data=d)
+
+    # Tests
+    assert np.isnan(cod(data, data_hat))
+
+    d = {'t': [t[0]], 'glucose': [np.nan]}
+    data_hat = pd.DataFrame(data=d)
+    d = {'t': [t[0]], 'glucose': [120]}
+    data = pd.DataFrame(data=d)
+
+    # Tests
+    assert np.isnan(cod(data, data_hat))

@@ -66,3 +66,19 @@ def test_rmse():
 
     assert np.isnan(rmse(data,data_hat)) == False
     assert rmse(data,data_hat) == res
+
+    d = {'t': [], 'glucose': []}
+    data_hat = pd.DataFrame(data=d)
+    d = {'t': [], 'glucose': []}
+    data = pd.DataFrame(data=d)
+
+    # Tests
+    assert np.isnan(rmse(data, data_hat))
+
+    d = {'t': [t[0]], 'glucose': [np.nan]}
+    data_hat = pd.DataFrame(data=d)
+    d = {'t': [t[0]], 'glucose': [120]}
+    data = pd.DataFrame(data=d)
+
+    # Tests
+    assert np.isnan(rmse(data, data_hat))

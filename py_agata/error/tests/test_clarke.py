@@ -69,3 +69,27 @@ def test_clarke():
     assert results["c"] == 0
     assert results["d"] == 37.5
     assert results["e"] == 25
+
+    d = {'t': [], 'glucose': []}
+    data_hat = pd.DataFrame(data=d)
+    d = {'t': [], 'glucose': []}
+    data = pd.DataFrame(data=d)
+
+    # Tests
+    assert np.isnan(clarke(data, data_hat)["a"])
+    assert np.isnan(clarke(data, data_hat)["b"])
+    assert np.isnan(clarke(data, data_hat)["c"])
+    assert np.isnan(clarke(data, data_hat)["d"])
+    assert np.isnan(clarke(data, data_hat)["e"])
+
+    d = {'t': [t[0]], 'glucose': [np.nan]}
+    data_hat = pd.DataFrame(data=d)
+    d = {'t': [t[0]], 'glucose': [120]}
+    data = pd.DataFrame(data=d)
+
+    # Tests
+    assert np.isnan(clarke(data, data_hat)["a"])
+    assert np.isnan(clarke(data, data_hat)["b"])
+    assert np.isnan(clarke(data, data_hat)["c"])
+    assert np.isnan(clarke(data, data_hat)["d"])
+    assert np.isnan(clarke(data, data_hat)["e"])

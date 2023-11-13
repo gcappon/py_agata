@@ -64,3 +64,19 @@ def test_mard():
     #Tests
     assert np.isnan(mard(data,data_hat)) == False
     assert np.round(mard(data,data_hat)*1000)/1000 == 16.771
+
+    d = {'t': [], 'glucose': []}
+    data_hat = pd.DataFrame(data=d)
+    d = {'t': [], 'glucose': []}
+    data = pd.DataFrame(data=d)
+
+    # Tests
+    assert np.isnan(mard(data, data_hat))
+
+    d = {'t': [t[0]], 'glucose': [np.nan]}
+    data_hat = pd.DataFrame(data=d)
+    d = {'t': [t[0]], 'glucose': [120]}
+    data = pd.DataFrame(data=d)
+
+    # Tests
+    assert np.isnan(mard(data, data_hat))

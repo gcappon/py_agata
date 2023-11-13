@@ -267,7 +267,7 @@ def find_hypoglycemic_events(data, th=70):
     # yet.
     if count > 0 and flag == -1:
         hypoglycemic_events['time_start'] = np.append(hypoglycemic_events['time_start'], temp_start_time)
-        hypoglycemic_events['duration'] = np.append(hypoglycemic_events['duration'], (pd.to_datetime(data.t.values[t - (n_samples - 1)]).to_pydatetime() - temp_start_time).seconds / 60)
+        hypoglycemic_events['duration'] = np.append(hypoglycemic_events['duration'], (pd.to_datetime(data.t.values[t - (n_samples - count - 1)]).to_pydatetime() - temp_start_time).seconds / 60)
         k += 1
 
     if count == n_samples and flag == 1:
@@ -396,7 +396,7 @@ def find_hyperglycemic_events(data, th=180):
     # yet.
     if count > 0 and flag == -1:
         hyperglycemic_events['time_start'] = np.append(hyperglycemic_events['time_start'], temp_start_time)
-        hyperglycemic_events['duration'] = np.append(hyperglycemic_events['duration'], (pd.to_datetime(data.t.values[t - (n_samples - 1)]).to_pydatetime() - temp_start_time).seconds / 60)
+        hyperglycemic_events['duration'] = np.append(hyperglycemic_events['duration'], (pd.to_datetime(data.t.values[t - (n_samples - count - 1)]).to_pydatetime() - temp_start_time).seconds / 60)
         k += 1
 
     if count == n_samples and flag == 1:
@@ -526,7 +526,7 @@ def find_extended_hypoglycemic_events(data, th=54):
     # yet.
     if count > 0 and flag == -1:
         extended_hypoglycemic_events['time_start'] = np.append(extended_hypoglycemic_events['time_start'], temp_start_time)
-        extended_hypoglycemic_events['duration'] = np.append(extended_hypoglycemic_events['duration'], (pd.to_datetime(data.t.values[t - (n_samples_out - 1)]).to_pydatetime() - temp_start_time).seconds / 60)
+        extended_hypoglycemic_events['duration'] = np.append(extended_hypoglycemic_events['duration'], (pd.to_datetime(data.t.values[t - (n_samples_out - count - 1)]).to_pydatetime() - temp_start_time).seconds / 60)
         k += 1
 
     if count == n_samples_in and flag == 1:

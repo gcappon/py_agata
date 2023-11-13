@@ -64,3 +64,19 @@ def test_time_delay():
     #Tests
     assert np.isnan(time_delay(data, data_hat,30)) == False
     assert np.round(time_delay(data, data_hat,30) * 1000) / 1000 == 30
+
+    d = {'t': [], 'glucose': []}
+    data_hat = pd.DataFrame(data=d)
+    d = {'t': [], 'glucose': []}
+    data = pd.DataFrame(data=d)
+
+    # Tests
+    assert np.isnan(time_delay(data, data_hat,30))
+
+    d = {'t': [t[0]], 'glucose': [np.nan]}
+    data_hat = pd.DataFrame(data=d)
+    d = {'t': [t[0]], 'glucose': [120]}
+    data = pd.DataFrame(data=d)
+
+    # Tests
+    assert np.isnan(time_delay(data, data_hat,30))

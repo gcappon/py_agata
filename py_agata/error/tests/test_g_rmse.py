@@ -64,3 +64,19 @@ def test_g_rmse():
     #Tests
     assert np.isnan(g_rmse(data,data_hat)) == False
     assert np.round(g_rmse(data,data_hat)*1000)/1000 == 12.990
+
+    d = {'t': [], 'glucose': []}
+    data_hat = pd.DataFrame(data=d)
+    d = {'t': [], 'glucose': []}
+    data = pd.DataFrame(data=d)
+
+    # Tests
+    assert np.isnan(g_rmse(data, data_hat))
+
+    d = {'t': [t[0]], 'glucose': [np.nan]}
+    data_hat = pd.DataFrame(data=d)
+    d = {'t': [t[0]], 'glucose': [120]}
+    data = pd.DataFrame(data=d)
+
+    # Tests
+    assert np.isnan(g_rmse(data, data_hat))
