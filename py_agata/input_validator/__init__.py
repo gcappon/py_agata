@@ -393,7 +393,7 @@ def check_same_length_ndarray(arr_1, arr_2):
     return True
 
 
-def check_same_length_ndarray(data_1, data_2):
+def check_same_length_dataframe(data_1, data_2):
     """
     Checks that data_1 and data_2 have the same length
 
@@ -470,8 +470,8 @@ def check_comparable_data(data_1, data_2):
     if data_1.shape[0] == 0:
         return True
     if not data_1.t.values[0] == data_2.t.values[0]:
-        raise Exception("Given dataframes start from the same timestamp")
+        raise Exception("Given dataframes must start from the same timestamp")
     if not data_1.t.values[-1] == data_2.t.values[-1]:
-        raise Exception("Given dataframes end with the same timestamp")
+        raise Exception("Given dataframes must end with the same timestamp")
 
     return True

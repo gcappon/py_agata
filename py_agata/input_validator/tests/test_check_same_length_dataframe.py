@@ -3,13 +3,13 @@ import numpy as np
 import datetime
 from datetime import datetime, timedelta
 
-from py_agata.input_validator import check_comparable_data
+from py_agata.input_validator import check_same_length_dataframe
 
 import pytest
 
-def test_check_comparable_data():
+def test_check_same_length_dataframe():
     """
-    Unit test of check_comparable_data function.
+    Unit test of check_same_length_dataframe function.
 
     Parameters
     ----------
@@ -35,7 +35,6 @@ def test_check_comparable_data():
     ----------
     None
     """
-    # Set test data
     t = np.arange(datetime(2000, 1, 1, 0, 0, 0), datetime(2000, 1, 1, 0, 55, 0), timedelta(minutes=5)).astype(
         datetime)
     glucose = np.zeros(shape=(t.shape[0],))
@@ -48,29 +47,13 @@ def test_check_comparable_data():
     glucose[10] = np.nan
     d = {'t': t, 'glucose': glucose}
     data_1 = pd.DataFrame(data=d)
-    d = {'t': t, 'glucose': glucose}
     data_2 = pd.DataFrame(data=d)
     d = {'t': t[0:-1], 'glucose': glucose[0:-1]}
     data_3 = pd.DataFrame(data=d)
-    d = {'t': t[1:], 'glucose': glucose[1:]}
-    data_4 = pd.DataFrame(data=d)
-    t = np.arange(datetime(2000, 1, 1, 0, 0, 0), datetime(2000, 1, 1, 0, 55, 0), timedelta(minutes=5)).astype(
-        datetime)
-    t[-1] = t[0]
-    d = {'t': t, 'glucose': glucose}
-    data_5 = pd.DataFrame(data=d)
 
     # Test not error
-    assert check_comparable_data(data_1, data_2)
+    assert check_same_length_dataframe(data_1, data_2)
 
-    # Test errors (different length)
+    # Test errors
     with pytest.raises(Exception):
-        check_comparable_data(data_1, data_3)
-
-    # Test errors (different start)
-    with pytest.raises(Exception):
-        check_comparable_data(data_3, data_4)
-
-    # Test errors (different end)
-    with pytest.raises(Exception):
-        check_comparable_data(data_1, data_5)
+        check_same_length_dataframe(data_1, data_3)
