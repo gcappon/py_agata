@@ -174,7 +174,7 @@ def number_days_of_observation(data):
 
     start_time = pd.to_datetime(data.t.values[0]).to_pydatetime()
     end_time = pd.to_datetime(data.t.values[-1]).to_pydatetime()
-    return (end_time - start_time).seconds / (60 * 60 * 24)
+    return (end_time - start_time).total_seconds() / (60 * 60 * 24)
 
 
 def find_hypoglycemic_events(data, th=70.):
@@ -242,7 +242,7 @@ def find_hypoglycemic_events(data, th=70.):
     k = 0 #hypoglycemic_event vector current index
     t0 = pd.to_datetime(data.t.values[0]).to_pydatetime()
     t1 = pd.to_datetime(data.t.values[1]).to_pydatetime()
-    sample_time = (t1 - t0).seconds / 60
+    sample_time = (t1 - t0).total_seconds() / 60
 
     n_samples = int(np.round(15/sample_time)) #number of consecutive samples required to define a valid event
 
@@ -282,7 +282,7 @@ def find_hypoglycemic_events(data, th=70.):
 
         if count == 0 and flag == -1:
             hypoglycemic_events['time_start'] = np.append(hypoglycemic_events['time_start'], temp_start_time)
-            hypoglycemic_events['duration'] = np.append(hypoglycemic_events['duration'], (pd.to_datetime(data.t.values[t - (n_samples - 1)]).to_pydatetime() - temp_start_time).seconds / 60)
+            hypoglycemic_events['duration'] = np.append(hypoglycemic_events['duration'], (pd.to_datetime(data.t.values[t - (n_samples - 1)]).to_pydatetime() - temp_start_time).total_seconds() / 60)
             k += 1
             flag = 0
 
@@ -291,12 +291,12 @@ def find_hypoglycemic_events(data, th=70.):
     # yet.
     if count > 0 and flag == -1:
         hypoglycemic_events['time_start'] = np.append(hypoglycemic_events['time_start'], temp_start_time)
-        hypoglycemic_events['duration'] = np.append(hypoglycemic_events['duration'], (pd.to_datetime(data.t.values[t - (n_samples - count - 1)]).to_pydatetime() - temp_start_time).seconds / 60)
+        hypoglycemic_events['duration'] = np.append(hypoglycemic_events['duration'], (pd.to_datetime(data.t.values[t - (n_samples - count - 1)]).to_pydatetime() - temp_start_time).total_seconds() / 60)
         k += 1
 
     if count == n_samples and flag == 1:
         hypoglycemic_events['time_start'] = np.append(hypoglycemic_events['time_start'], temp_start_time)
-        hypoglycemic_events['duration'] = np.append(hypoglycemic_events['duration'], (pd.to_datetime(data.t.values[t]).to_pydatetime() - temp_start_time).seconds / 60 + sample_time)
+        hypoglycemic_events['duration'] = np.append(hypoglycemic_events['duration'], (pd.to_datetime(data.t.values[t]).to_pydatetime() - temp_start_time).total_seconds() / 60 + sample_time)
         k = k + 1
 
     for k in range(hypoglycemic_events['time_start'].size):
@@ -377,7 +377,7 @@ def find_hyperglycemic_events(data, th=180.):
     k = 0 #hypoglycemic_event vector current index
     t0 = pd.to_datetime(data.t.values[0]).to_pydatetime()
     t1 = pd.to_datetime(data.t.values[1]).to_pydatetime()
-    sample_time = (t1 - t0).seconds / 60
+    sample_time = (t1 - t0).total_seconds() / 60
 
     n_samples = int(np.round(15/sample_time)) #number of consecutive samples required to define a valid event
 
@@ -417,7 +417,7 @@ def find_hyperglycemic_events(data, th=180.):
 
         if count == 0 and flag == -1:
             hyperglycemic_events['time_start'] = np.append(hyperglycemic_events['time_start'], temp_start_time)
-            hyperglycemic_events['duration'] = np.append(hyperglycemic_events['duration'], (pd.to_datetime(data.t.values[t - (n_samples - 1)]).to_pydatetime() - temp_start_time).seconds / 60)
+            hyperglycemic_events['duration'] = np.append(hyperglycemic_events['duration'], (pd.to_datetime(data.t.values[t - (n_samples - 1)]).to_pydatetime() - temp_start_time).total_seconds() / 60)
             k += 1
             flag = 0
 
@@ -426,12 +426,12 @@ def find_hyperglycemic_events(data, th=180.):
     # yet.
     if count > 0 and flag == -1:
         hyperglycemic_events['time_start'] = np.append(hyperglycemic_events['time_start'], temp_start_time)
-        hyperglycemic_events['duration'] = np.append(hyperglycemic_events['duration'], (pd.to_datetime(data.t.values[t - (n_samples - count - 1)]).to_pydatetime() - temp_start_time).seconds / 60)
+        hyperglycemic_events['duration'] = np.append(hyperglycemic_events['duration'], (pd.to_datetime(data.t.values[t - (n_samples - count - 1)]).to_pydatetime() - temp_start_time).total_seconds() / 60)
         k += 1
 
     if count == n_samples and flag == 1:
         hyperglycemic_events['time_start'] = np.append(hyperglycemic_events['time_start'], temp_start_time)
-        hyperglycemic_events['duration'] = np.append(hyperglycemic_events['duration'], (pd.to_datetime(data.t.values[t]).to_pydatetime() - temp_start_time).seconds / 60 + sample_time)
+        hyperglycemic_events['duration'] = np.append(hyperglycemic_events['duration'], (pd.to_datetime(data.t.values[t]).to_pydatetime() - temp_start_time).total_seconds() / 60 + sample_time)
         k = k + 1
 
     for k in range(hyperglycemic_events['time_start'].size):
@@ -512,7 +512,7 @@ def find_extended_hypoglycemic_events(data, th=54.):
     k = 0 #hypoglycemic_event vector current index
     t0 = pd.to_datetime(data.t.values[0]).to_pydatetime()
     t1 = pd.to_datetime(data.t.values[1]).to_pydatetime()
-    sample_time = (t1 - t0).seconds / 60
+    sample_time = (t1 - t0).total_seconds() / 60
 
     n_samples_in = int(np.round(120/sample_time)) #number of consecutive samples required to define the start of a valid event
     n_samples_out = int(np.round(15/ sample_time))  # number of consecutive samples required to define the end of a valid event
@@ -553,7 +553,7 @@ def find_extended_hypoglycemic_events(data, th=54.):
 
         if count == 0 and flag == -1:
             extended_hypoglycemic_events['time_start'] = np.append(extended_hypoglycemic_events['time_start'], temp_start_time)
-            extended_hypoglycemic_events['duration'] = np.append(extended_hypoglycemic_events['duration'], (pd.to_datetime(data.t.values[t - (n_samples_out - 1)]).to_pydatetime() - temp_start_time).seconds / 60)
+            extended_hypoglycemic_events['duration'] = np.append(extended_hypoglycemic_events['duration'], (pd.to_datetime(data.t.values[t - (n_samples_out - 1)]).to_pydatetime() - temp_start_time).total_seconds() / 60)
             k += 1
             flag = 0
 
@@ -562,12 +562,12 @@ def find_extended_hypoglycemic_events(data, th=54.):
     # yet.
     if count > 0 and flag == -1:
         extended_hypoglycemic_events['time_start'] = np.append(extended_hypoglycemic_events['time_start'], temp_start_time)
-        extended_hypoglycemic_events['duration'] = np.append(extended_hypoglycemic_events['duration'], (pd.to_datetime(data.t.values[t - (n_samples_out - count - 1)]).to_pydatetime() - temp_start_time).seconds / 60)
+        extended_hypoglycemic_events['duration'] = np.append(extended_hypoglycemic_events['duration'], (pd.to_datetime(data.t.values[t - (n_samples_out - count - 1)]).to_pydatetime() - temp_start_time).total_seconds() / 60)
         k += 1
 
     if count == n_samples_in and flag == 1:
         extended_hypoglycemic_events['time_start'] = np.append(extended_hypoglycemic_events['time_start'], temp_start_time)
-        extended_hypoglycemic_events['duration'] = np.append(extended_hypoglycemic_events['duration'], (pd.to_datetime(data.t.values[t]).to_pydatetime() - temp_start_time).seconds / 60 + sample_time)
+        extended_hypoglycemic_events['duration'] = np.append(extended_hypoglycemic_events['duration'], (pd.to_datetime(data.t.values[t]).to_pydatetime() - temp_start_time).total_seconds() / 60 + sample_time)
         k = k + 1
 
     for k in range(extended_hypoglycemic_events['time_start'].size):
