@@ -305,7 +305,7 @@ def check_ndarray_float_parameter(parameter):
     if parameter.size == 0:
         return True
 
-    if not type(parameter[0]) is np.float_:
+    if not type(parameter[0]) is np.float64:
         raise Exception("`parameter` must contain float values")
 
     return True
