@@ -614,7 +614,8 @@ def mage_plus_index(data):
     first_day = pd.to_datetime(data.t.values[0]).to_pydatetime()
     first_day = first_day.replace(hour=0, minute=0, second=0)
     last_day = pd.to_datetime(data.t.values[-1]).to_pydatetime()
-    last_day = last_day.replace(day=last_day.day + 1, hour=0, minute=0, second=0)
+    last_day = last_day.__add__(timedelta(days=1)).replace(hour=0, minute=0, second=0)
+
 
     # Calculate the number of days and preallocate
     n_days = (last_day - first_day).days
@@ -785,7 +786,8 @@ def mage_minus_index(data):
     first_day = pd.to_datetime(data.t.values[0]).to_pydatetime()
     first_day = first_day.replace(hour=0, minute=0, second=0)
     last_day = pd.to_datetime(data.t.values[-1]).to_pydatetime()
-    last_day = last_day.replace(day=last_day.day + 1, hour=0, minute=0, second=0)
+    last_day = last_day.__add__(timedelta(days=1)).replace(hour=0, minute=0, second=0)
+
 
     # Calculate the number of days and preallocate
     n_days = (last_day - first_day).days
@@ -1003,7 +1005,8 @@ def ef_index(data):
     first_day = pd.to_datetime(data.t.values[0]).to_pydatetime()
     first_day = first_day.replace(hour=0, minute=0, second=0)
     last_day = pd.to_datetime(data.t.values[-1]).to_pydatetime()
-    last_day = last_day.replace(day=last_day.day + 1, hour=0, minute=0, second=0)
+    last_day = last_day.__add__(timedelta(days=1)).replace(hour=0, minute=0, second=0)
+
 
     # Calculate the number of days and preallocate
     n_days = (last_day - first_day).days
@@ -1235,7 +1238,8 @@ def sddm_index(data):
     first_day = pd.to_datetime(data.t.values[0]).to_pydatetime()
     first_day = first_day.replace(hour=0, minute=0, second=0)
     last_day = pd.to_datetime(data.t.values[-1]).to_pydatetime()
-    last_day = last_day.replace(day=last_day.day + 1, hour=0, minute=0, second=0)
+    last_day = last_day.__add__(timedelta(days=1)).replace(hour=0, minute=0, second=0)
+
 
     # Calculate the number of days and preallocate
     n_days = (last_day - first_day).days
@@ -1300,7 +1304,8 @@ def sdw_index(data):
     first_day = pd.to_datetime(data.t.values[0]).to_pydatetime()
     first_day = first_day.replace(hour=0, minute=0, second=0)
     last_day = pd.to_datetime(data.t.values[-1]).to_pydatetime()
-    last_day = last_day.replace(day=last_day.day + 1, hour=0, minute=0, second=0)
+    last_day = last_day.__add__(timedelta(days=1)).replace(hour=0, minute=0, second=0)
+
 
     # Calculate the number of days and preallocate
     n_days = (last_day - first_day).days
